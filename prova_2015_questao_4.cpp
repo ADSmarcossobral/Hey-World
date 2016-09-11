@@ -1,34 +1,34 @@
 #include <stdio.h>
 
 main(){
-	
-	int fita[14], pos[14], preenchidos, p = 0, dias = 0, completo = 0, y = 0;
-	//Recebendo as gotas nas posiÁıes inseridas pelo usu·rio
+	// Como ser√£o 1000 posi√ß√µes, partindo da posi√ß√£o 1, os vetores ter√£o 1001 posi√ß√µes, assim descartando a posi√ß√£o 0.
+	int fita[1001], pos[1001], preenchidos, p = 0, dias = 0, completo = 0, y = 0;
+	//Recebendo as gotas nas posi√ß√µes inseridas pelo usu√°rio
 	do{
-		p++; // Partindo da posiÁ„o 1 e incrementando + 1 a cada repetiÁ„o.
-		scanf("%d", &pos[p]); // Recebendo a posiÁ„o da gota e armezenando em outro vetor.
-		if(pos[p] > 0 && pos[p] <= 13){ // A posiÁ„o tem que est· entre 1 e 13.
-			fita[pos[p]] = 1; // Caso seja verdadeira a condiÁ„o, a gota cair· na posiÁ„o recebida (O n˙mero 1 representar· a gota).
+		p++; // Partindo da posi√ß√£o 1 e incrementando + 1 a cada repeti√ß√£o.
+		scanf("%d", &pos[p]); // Recebendo a posi√ß√£o da gota e armezenando em outro vetor.
+		if(pos[p] > 0 && pos[p] <= 1000){ // A posi√ß√£o tem que est√° entre 1 e 1000.
+			fita[pos[p]] = 1; // Caso seja verdadeira a condi√ß√£o, a gota cair√° na posi√ß√£o recebida (O n√∫mero 1 representar√° a gota).
 		}
-	} while(pos[p] > 0 && pos[p] <= 13); // O WHILE continuar· enquanto a posiÁ„o da gota estiver entre 1 e 13.
+	} while(pos[p] > 0 && pos[p] <= 1000); // O WHILE continuar√° enquanto a posi√ß√£o da gota estiver entre 1 e 1000.
 	 
-	 preenchidos = p; // Essa vari·vel ser· o contador de quantas posiÁıes foram preenchidas. E j· se inicia com quantidade de gotas pingadas.
+	 preenchidos = p; // Essa vari√°vel ser√° o contador de quantas posi√ß√µes foram preenchidas. E j√° se inicia com quantidade de gotas pingadas.
 	 
-	while(preenchidos < 13){ // O WHILE continuar· atÈ que todas as posiÁıes sejam preenchidas.
-		y++; // Incrementador que ajudar· a verificar todas as posiÁıes, partindo das primeiras gotas.
-		int aux = p; // Para que o valor de p n„o seja alterado, usarei uma nova vari·vel para auxiliar no caso.
-		for(int z = 0; z < p && preenchidos < 13; z++){ // Esse FOR ir· se repetir o n˙mero de vezes da quantidade de gotas pingadas na fita, durante todo WHILE.
+	while(preenchidos < 1000){ // O WHILE continuar√° at√© que todas as posi√ß√µes sejam preenchidas.
+		y++; // Incrementador que ajudar√° a verificar todas as posi√ß√µes, partindo das primeiras gotas.
+		int aux = p; // Para que o valor de p n√£o seja alterado, usarei uma nova vari√°vel para auxiliar no caso.
+		for(int z = 0; z < p && preenchidos < 1000; z++){ // Esse FOR ir√° se repetir o n√∫mero de vezes da quantidade de gotas pingadas na fita, durante todo WHILE.
 			
-			if(fita[pos[aux] - y] != 1 && pos[aux] - y > 0){ // Se o n˙mero da posiÁ„o da gota pingada menos o valor de y n„o estiver preenchida...
-				fita[pos[aux] - y] = 1; // Preenche-se a posiÁ„o.
-				preenchidos++; // Incrementando 1 nas posiÁıes preenchidas.
+			if(fita[pos[aux] - y] != 1 && pos[aux] - y > 0){ // Se o n√∫mero da posi√ß√£o da gota pingada menos o valor de y n√£o estiver preenchida...
+				fita[pos[aux] - y] = 1; // Preenche-se a posi√ß√£o.
+				preenchidos++; // Incrementando 1 nas posi√ß√µes preenchidas.
 			}
 
-			if(fita[pos[aux] + y] != 1 && pos[aux] + y <= 13){ // Se o n˙mero da posiÁ„o da gota pingada mais o valor de y n„o estiver preenchida...
-				fita[pos[aux] + y] = 1; // Preenche-se a posiÁ„o.
-				preenchidos++; // Incrementando 1 nas posiÁıes preenchidas.
+			if(fita[pos[aux] + y] != 1 && pos[aux] + y <= 1000){ // Se o n√∫mero da posi√ß√£o da gota pingada mais o valor de y n√£o estiver preenchida...
+				fita[pos[aux] + y] = 1; // Preenche-se a posi√ß√£o.
+				preenchidos++; // Incrementando 1 nas posi√ß√µes preenchidas.
 			}
-			aux--; // Descrementando para testar as outras posiÁıes.
+			aux--; // Descrementando para testar as outras posi√ß√µes.
 		}
 		dias++;	// Depois de cada FOR, passa-se um dia.
 	}
