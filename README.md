@@ -1,2 +1,2 @@
 # Hey-World
-Provas - IFBA
+Repositório com códigos na linguagem C
