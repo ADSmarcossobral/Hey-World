@@ -10,7 +10,7 @@ main(){
 		if(pos[p] > 0 && pos[p] <= 13){ // A posição tem que está entre 1 e 13.
 			fita[pos[p]] = 1; // Caso seja verdadeira a condição, a gota cairá na posição recebida (O número 1 representará a gota).
 		}
-	} while(pos[p] > 0 && pos[p] <= 13); // O WHILE continuará enquanto a posição da gota estiver entre 1 e 13.
+	} while(pos[p] > 0 && pos[p] <= 13); // O WHILE continuará enquanto as posições das gotas estiverem entre 1 e 13.
 	 
 	 preenchidos = p; // Essa variável será o contador de quantas posições foram preenchidas. E já se inicia com quantidade de gotas pingadas.
 	 
