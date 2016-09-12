@@ -18,7 +18,7 @@ main(){
 		printf("30 dias");
 	}
 	
-	if(mes > 12){
+	if(mes > 12 && mes < 1){
 		printf("Mes invalido");
 	}
 	
