@@ -7,7 +7,6 @@ main(){
 	for(int x = 0; x < 10; x++){
 		scanf("%d", &v[x]);
 	}
-	
 	for(int x = 0; x < 10; x++){
 		aux1 = 0;
 		aux2 = x;
@@ -19,16 +18,12 @@ main(){
 			aux1++;
 			aux2 = x;
 		}
-		
 		for(int z = 0; z < 10 - x; z++){
 			if(vidas[z] > maximo){
 				maximo = vidas[z];
 			}
 			vidas[z] = 0;
 		}
-	
 	}
-	
 	printf("\nVidas Maxima = %d", maximo);
-	
 }
