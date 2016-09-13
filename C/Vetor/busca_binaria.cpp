@@ -27,7 +27,7 @@ main(){
 		printf("%d ", v[x]);
 	}
 
-	//Buscando um elemento no vetor - Busca bin·ria
+	//Buscando um elemento no vetor - Busca bin√°ria
 	
 	fim = tam - 1;
 	meio = fim / 2;
