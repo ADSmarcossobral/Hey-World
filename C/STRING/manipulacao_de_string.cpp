@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <string.h>
-
 main(){
 	char stringA[20], stringB[20];
 	gets(stringA);
@@ -17,12 +15,12 @@ main(){
 	}
 	printf("\nA string B possui %d caracteres\n", tamB);
 	// Convertendo do minúsculo para maiúsculo
-	for(int x = 0; x < strlen(stringA); x++){
+	for(int x = 0; x < tamA; x++){
 		if(stringA[x] >= 97 && stringA[x] <= 122){ // De 97 a 122 temos as letras de a a z... Só será feita a conversão, se a letra for minúscula.
 			stringA[x] = stringA[x] - 32;
 		}
 	}
-	for(int x = 0; x < strlen(stringB); x++){
+	for(int x = 0; x < tamB; x++){
 		if(stringB[x] >= 97 && stringB[x] <= 122){ // De 97 a 122 temos as letras de a a z... Só será feita a conversão, se a letra for minúscula.
 			stringB[x] = stringB[x] - 32;
 		}
@@ -30,12 +28,12 @@ main(){
 	puts(stringA);
 	puts(stringB);
 	// Convertendo de maiúsculo para manúsculo
-	for(int x = 0; x < strlen(stringA); x++){
+	for(int x = 0; x < tamA; x++){
 		if(stringA[x] >= 65 && stringA[x] <= 90){ // De 65 a 90 temos as letras de A a Z na tabela ASCII... Só será feita a conversão, se a letra for maiúscula.
 			stringA[x] = stringA[x] + 32;
 		}
 	}
-	for(int x = 0; x < strlen(stringB); x++){
+	for(int x = 0; x < tamB; x++){
 		if(stringB[x] >= 65 && stringB[x] <= 90){ // De 65 a 90 temos as letras de A a Z... Só será feita a conversão, se a letra for maiúscula.
 			stringB[x] = stringB[x] + 32;
 		}
