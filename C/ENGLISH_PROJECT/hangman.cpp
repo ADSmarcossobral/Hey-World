@@ -252,35 +252,22 @@ int main(){
 						acertou = 1; 
 						pos_acertou[y] = y;
 						completou++;
+						Beep(1000,100);
 					} 		
 				}
-				if(acertou){
-					system("cls");
-					tela_inicial();
-					printf("\n*A PALAVRA POSSUI %d LETRAS* \tDICA: %s\n\n\n", strlen(palavras[x]), dicas[x]);
-					// Substituindo os underline pelas letras acertadas
-					for(int y = 0; y < strlen(palavras[x]); y++){
-						if(y == pos_acertou[y]){
-							printf("%c ", palavras[x][y]);
-						} else{
-							printf("_ ");
-						}
+				system("cls");
+				tela_inicial();
+				printf("\n*A PALAVRA POSSUI %d LETRAS* \tDICA: %s\n\n\n", strlen(palavras[x]), dicas[x]);
+				// Substituindo os underline pelas letras acertadas
+				for(int y = 0; y < strlen(palavras[x]); y++){
+					if(y == pos_acertou[y]){
+						printf("%c ", palavras[x][y]);
+					} else{
+						printf("_ ");
 					}
-					Beep(1000,100);
-					
-				} else if(!acertou){
+				}	
+				if(!acertou){
 					erro++;
-					system("cls");
-					tela_inicial();
-					printf("\n*A PALAVRA POSSUI %d LETRAS* \tDICA: %s\n\n\n", strlen(palavras[x]), dicas[x]);
-					// Substituindo os underlines pelas letras acertadas
-					for(int y = 0; y < strlen(palavras[x]); y++){
-						if(y == pos_acertou[y]){
-							printf("%c ", palavras[x][y]);
-						} else{
-							printf("_ ");
-						}
-					}
 					Beep(2000,100);	
 				}
 				// Quando o jogador acerta a palavra...
