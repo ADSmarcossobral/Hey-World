@@ -1,6 +1,6 @@
 /*
-	DescriÁ„o: Jogo da forca com verbos no Simple Present
-	Vers„o 1.0
+	Descri√ß√£o: Jogo da forca com verbos no Simple Present
+	Vers√£o 1.0
 	
 */
 
@@ -17,7 +17,7 @@
 #define tam_dicas 256
 #define tam_definicao 256
 
-// Menu que ficar· no topo da tela
+// Menu que ficar√° no topo da tela
 void tela_inicial(){
 			printf("******************************************************************************\n");
 			printf("*                     HANGMAN GAME - SIMPLE PRESENT                          *\n");
@@ -62,7 +62,7 @@ void tronco_lat(){
 void tronco_lat_n(){
 	printf("\t**\n");
 }
-// CabeÁa do boneco
+// Cabe√ßa do boneco
 void cabeca(){
 	tronco_lat();
 	printf("\t   ***********\n");
@@ -75,7 +75,7 @@ void cabeca(){
 	tronco_lat();
 	printf("\t   ***********\n");
 }
-// CabeÁa do boneco ao perder o jogo
+// Cabe√ßa do boneco ao perder o jogo
 void cabeca_lose(){
 	tronco_lat();
 	printf("\t   ***********\n");
@@ -88,14 +88,14 @@ void cabeca_lose(){
 	tronco_lat();
 	printf("\t   ***********\n");
 }
-// PescoÁo do boneco
+// Pesco√ßo do boneco
 void pescoco(){
 	tronco_lat();
 	printf("\t       **\n");
 	tronco_lat();
 	printf("\t       **\n");
 }
-// BraÁo esquerdo do boneco (TambÈm usado como perna esquerda)
+// Bra√ßo esquerdo do boneco (Tamb√©m usado como perna esquerda)
 void braco_esq(){
 	tronco_lat();
 	printf("\t     *\n");
@@ -104,7 +104,7 @@ void braco_esq(){
 	tronco_lat();
 	printf("\t   *\n");
 }
-// BraÁo esquerdo e direito do boneco (TambÈm usado como ambas pernas)
+// Bra√ßo esquerdo e direito do boneco (Tamb√©m usado como ambas pernas)
 void braco_esq_dir(){
 	tronco_lat();
 	printf("\t     *    *\n");
@@ -140,17 +140,17 @@ int main(){
 		
 		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCANF"}; // Palavras do jogo
 		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA"}; // Dicas das respectivas palavras
-		char definicao[qtd_palavras][tam_definicao] = {"BlaBlaBlaBla", "Blablablabla"}; //DescriÁ„os das respectivas palavras
-		char letra; // Letra informada pelo usu·rio
-		int x = 0; // Ìndice aleatÛrio
+		char definicao[qtd_palavras][tam_definicao] = {"BlaBlaBlaBla", "Blablablabla"}; //Descri√ß√µes das respectivas palavras
+		char letra; // Letra informada pelo usu√°rio
+		int x = 0; // √≠ndice aleat√≥rio
 		int erro; // Quantidade de erros do jogador (O jogo termina com o total de 6 erros)
 		int completou = 0; // Quando 1, o jogador vence e o jogo acaba
 		int percorrido = 0; // Contando se toda string foi verificada
-		int acertou = 0; // Quando o usu·rio acerta uma letra, seu valor vira 1, mostra-se a letra, e seu valor volta a ser 0
+		int acertou = 0; // Quando o usu√°rio acerta uma letra, seu valor vira 1, mostra-se a letra, e seu valor volta a ser 0
 		char new_game = '1'; // Valor 1 para entrar no jogo
-		int pos_acertou[10]; // PosiÁ„o da letra acertada
-		int let_inf = 0; // 0 --> Letra n„o informada | 1 --> Letra j· informada
-		int pos_let_inf = 0; // Contador para posiÁ„o do vetor das letra informadas
+		int pos_acertou[10]; // Posi√ß√£o da letra acertada
+		int let_inf = 0; // 0 --> Letra n√£o informada | 1 --> Letra j√° informada
+		int pos_let_inf = 0; // Contador para posi√ß√£o do vetor das letra informadas
 		char letras_informadas[alfabeto]; // Vetor para armezenar as letras informadas		
 		
 		while(new_game == '1'){
@@ -161,12 +161,12 @@ int main(){
 			if(new_game == '1'){
 				system("cls"); // Limpando a tela
 				tela_inicial();
-				//Pegando um Ìndice aleatÛrio
+				//Pegando um √≠ndice aleat√≥rio
 				srand( (unsigned)time(NULL));
 				x = rand() % qtd_palavras; // Sorteando um numero de 0 a Quantidade de palavras
 				printf("\n*A PALAVRA POSSUI %d LETRAS* \tDICA: %s\n\n\n", strlen(palavras[x]), dicas[x]);
-				erro = 0; // resetando a vari·vel de erros
-				completou = 0; // resetando a vari·vel de letras acertadas
+				erro = 0; // resetando a vari√°vel de erros
+				completou = 0; // resetando a vari√°vel de letras acertadas
 				pos_let_inf = 0;
 				let_inf = 0;
 				for(int k = 0; k < 10; k++){
@@ -177,7 +177,7 @@ int main(){
 				}
 							
 			} else if(new_game == '0'){
-				printf("\nJOGO FINALIZADO!\n"); break; // Finalizando jogo caso a opÁ„o escolhida seja 0
+				printf("\nJOGO FINALIZADO!\n"); break; // Finalizando jogo caso a op√ß√£o escolhida seja 0
 			} else{
 				printf("\nOPCAO INVALIDA! POR FAVOR, ESCOLHA UMA VALIDA!\n\n");
 				printf("\n\nPRESSIONE QUALQUER TECLA PARA RETORNAR AO MENU.\n");
@@ -229,7 +229,7 @@ int main(){
 				do{
 					scanf("%c", &letra);
 					fflush(stdin);
-					let_inf = 0; // 0 --> Letra n„o informada
+					let_inf = 0; // 0 --> Letra n√£o informada
 					for(int y = 0; y < alfabeto; y++){
 						if(letra == letras_informadas[y]){
 							let_inf = 1; // 1 --> Letra informada
@@ -239,12 +239,12 @@ int main(){
 						printf("\nA letra ja foi informada! Por favor, informe outra: ");
 					}
 					
-				} while(let_inf == 1); // Repete-se atÈ que a letra n„o tenha sido informada
+				} while(let_inf == 1); // Repete-se at√© que a letra n√£o tenha sido informada
 				
 				letras_informadas[pos_let_inf] = letra; // Salvando a letra informada no vetor
-				pos_let_inf++; // PrÛxima posiÁ„o no qual a prÛxima letra informada ser· salva
+				pos_let_inf++; // Pr√≥xima posi√ß√£o no qual a pr√≥xima letra informada ser√° salva
 				
-				letra = toupper(letra); // Convertendo letra para mai˙scula
+				letra = toupper(letra); // Convertendo letra para mai√∫scula
 				// Verificando na string se a letra informada existe na palavra
 				acertou = 0;
 				for(int y = 0; y < strlen(palavras[x]); y++){
