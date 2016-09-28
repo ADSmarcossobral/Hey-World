@@ -230,7 +230,7 @@ int main(){
 					scanf("%c", &letra);
 					fflush(stdin);
 					let_inf = 0; // 0 --> Letra não informada
-					for(int y = 0; y < alfabeto; y++){
+					for(int y = 0; y < erro + completou; y++){
 						if(letra == letras_informadas[y]){
 							let_inf = 1; // 1 --> Letra informada
 						}
