@@ -138,9 +138,14 @@ void cabeca_lose();
 
 int main(){
 		
-		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCANF"}; // Palavras do jogo
-		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA"}; // Dicas das respectivas palavras
-		char definicao[qtd_palavras][tam_definicao] = {"BlaBlaBlaBla", "Blablablabla"}; //Descrições das respectivas palavras
+		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCAN", "INSTALL", "RETURN", "TRY", "DELETE", "INSERT", 
+							    "DOWNLOAD", "UPLOAD", "READ", "WRITE", "UPDATE"}; // Palavras do jogo
+		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA", ""}; // Dicas das respectivas palavras
+		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando muito utilizado em algumas linguagens de programacao, para exibir uma mensagem ao usuario.\n Ex: print('Hello, world');",
+							       "DIGITALIZAR. Comando muito utilizado em algumas linguagens de programacao, para receber um dado de um usuario.\n Ex: scanf('%d', inteiro);",
+							       "INSTALAR. Muito presente nas instalacoes de programas de idioma ingles.",
+							       "RETORNAR. Comando muito utilizado nas linguagens de programacao, para retornar um dado.\nEx: return 0;",
+							       "TRY", }; //Descrições das respectivas palavras
 		char letra; // Letra informada pelo usuário
 		int x = 0; // índice aleatório
 		int erro; // Quantidade de erros do jogador (O jogo termina com o total de 6 erros)
@@ -274,7 +279,7 @@ int main(){
 				if(completou == strlen(palavras[x])){
 					printf("\n\nPARABENS! VOCE GANHOU!\n");
 					printf("\n\nSobre o verbo %s", palavras[x]);
-					printf("\n\n\t%s", definicao[x]);
+					printf("\n\n\tTraduzido para o portuguÊs, significa: %s", definicao[x]);
 					printf("\n\nPRESSIONE QUALQUER TECLA PARA RETORNAR AO MENU.\n");
 					getchar();
 					system("cls");
