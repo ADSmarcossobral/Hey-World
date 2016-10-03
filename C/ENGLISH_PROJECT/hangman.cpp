@@ -140,10 +140,11 @@ int main(){
 		
 		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCAN", "INSTALL", "RETURN", "TRY", "DELETE", "THROW", 
 							    "DOWNLOAD", "UPLOAD", "READ", "WRITE", "UPDATE", "EMBED", "EXECUTE"}; // Palavras do jogo
-		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA", ""}; // Dicas das respectivas palavras
+		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA", "PROGRAMA", "FUNCAO", "EXCESSAO", "TEM NO TECLADO", "EXCESSAO",
+						       "ARQUIVO", "ARQUIVO", "PERMISSAO", "PERMISSAO", "PERMISSAO", "PROGRAMA", "MULTIMIDIA NO HTML", "PERMISSAO"}; // Dicas das respectivas palavras
 		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando utilizado nas linguagens de programacao, para exibir uma mensagem ao usuario.\n Ex: print('Hello, world');",
 							       "DIGITALIZAR. Comando utilizado nas linguagens de programacao, para receber um dado de um usuario.\n Ex: scanf('%d', inteiro);",
-							       "INSTALAR. Muito presente nas instalacoes de programas de idioma ingles.",
+							       "INSTALAR. Consiste em instalar um software ou programa em um computador.",
 							       "RETORNAR. Comando utilizado nas linguagens de programacao, para retornar um dado.\nEx: return 0;",
 							       "TENTAR. Comando utilizado nas linguagens de programacao, para tratar excessoes de erros no programa.\nEx: try{\n\tfor(int X = 0; x < 5; x++)\n}",
 							       "EXCLUIR. Apagar arquivos, dados, etc.",
@@ -153,7 +154,8 @@ int main(){
 							       "LER. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode ler o arquivo.",
 							       "ESCREVER. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode alterar o arquivo.",
 							       "ATUALIZAR. Consiste em fazer alteracoes em arquivos ou software, sendo para corrigir erros ou trazer novidade.",
-							       CORPORAR. Consiste e}; //Descrições das respectivas palavras
+							       "INCORPORAR. Tag usada no HTML para inserir multimidias em paginas da internet.",
+							       "EXECUTAR. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode abrir o arquivo."}; //Descrições das respectivas palavras
 		char letra; // Letra informada pelo usuário
 		int x = 0; // índice aleatório
 		int erro; // Quantidade de erros do jogador (O jogo termina com o total de 6 erros)
