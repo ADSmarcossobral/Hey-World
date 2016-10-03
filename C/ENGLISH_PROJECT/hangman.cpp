@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include <windows.h>
 
-#define qtd_palavras 2 // Mudar valor inteiro para quantidade de palavras que compor o jogo
+#define qtd_palavras 12 // Mudar valor inteiro para quantidade de palavras que compor o jogo
 #define tam_palavras 10
 #define alfabeto 26
 #define tam_dicas 256
