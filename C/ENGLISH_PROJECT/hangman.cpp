@@ -138,14 +138,17 @@ void cabeca_lose();
 
 int main(){
 		
-		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCAN", "INSTALL", "RETURN", "TRY", "DELETE", "INSERT", 
+		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCAN", "INSTALL", "RETURN", "TRY", "DELETE", "THROW", 
 							    "DOWNLOAD", "UPLOAD", "READ", "WRITE", "UPDATE"}; // Palavras do jogo
 		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA", ""}; // Dicas das respectivas palavras
-		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando muito utilizado em algumas linguagens de programacao, para exibir uma mensagem ao usuario.\n Ex: print('Hello, world');",
-							       "DIGITALIZAR. Comando muito utilizado em algumas linguagens de programacao, para receber um dado de um usuario.\n Ex: scanf('%d', inteiro);",
+		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando utilizado nas linguagens de programacao, para exibir uma mensagem ao usuario.\n Ex: print('Hello, world');",
+							       "DIGITALIZAR. Comando utilizado nas linguagens de programacao, para receber um dado de um usuario.\n Ex: scanf('%d', inteiro);",
 							       "INSTALAR. Muito presente nas instalacoes de programas de idioma ingles.",
-							       "RETORNAR. Comando muito utilizado nas linguagens de programacao, para retornar um dado.\nEx: return 0;",
-							       "TRY", }; //Descrições das respectivas palavras
+							       "RETORNAR. Comando utilizado nas linguagens de programacao, para retornar um dado.\nEx: return 0;",
+							       "TENTAR. Comando utilizado nas linguagens de programacao, para tratar excessoes de erros no programa.\nEx: try{\n\tfor(int X = 0; x < 5; x++)\n}",
+							       "EXCLUIR. Apagar arquivos, dados, etc.",
+							       "PEGAR. Comando utilizado nas linguagens de programacao, para tratar erros no programa.\nEx: catch(NullExpointerExceptional e){\n\t...\n\t}",
+							       "BAIXAR. "}; //Descrições das respectivas palavras
 		char letra; // Letra informada pelo usuário
 		int x = 0; // índice aleatório
 		int erro; // Quantidade de erros do jogador (O jogo termina com o total de 6 erros)
