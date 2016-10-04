@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include <windows.h>
 
-#define qtd_palavras 12 // Mudar valor inteiro para quantidade de palavras que compor o jogo
+#define qtd_palavras 16 // Mudar valor inteiro para quantidade de palavras que compor o jogo
 #define tam_palavras 10
 #define alfabeto 26
 #define tam_dicas 256
@@ -138,24 +138,26 @@ void cabeca_lose();
 
 int main(){
 		
-		char palavras[qtd_palavras][tam_palavras] = {"PRINT", "SCAN", "INSTALL", "RETURN", "TRY", "DELETE", "THROW", 
-							    "DOWNLOAD", "UPLOAD", "READ", "WRITE", "UPDATE", "EMBED", "EXECUTE"}; // Palavras do jogo
-		char dicas[qtd_palavras][tam_dicas] = {"SAIDA", "ENTRADA", "PROGRAMA", "FUNCAO", "EXCESSAO", "TEM NO TECLADO", "EXCESSAO",
-						       "ARQUIVO", "ARQUIVO", "PERMISSAO", "PERMISSAO", "PERMISSAO", "PROGRAMA", "MULTIMIDIA NO HTML", "PERMISSAO"}; // Dicas das respectivas palavras
-		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando utilizado nas linguagens de programacao, para exibir uma mensagem ao usuario.\n Ex: print('Hello, world');",
-							       "DIGITALIZAR. Comando utilizado nas linguagens de programacao, para receber um dado de um usuario.\n Ex: scanf('%d', inteiro);",
-							       "INSTALAR. Consiste em instalar um software ou programa em um computador.",
-							       "RETORNAR. Comando utilizado nas linguagens de programacao, para retornar um dado.\nEx: return 0;",
-							       "TENTAR. Comando utilizado nas linguagens de programacao, para tratar excessoes de erros no programa.\nEx: try{\n\tfor(int X = 0; x < 5; x++)\n}",
-							       "EXCLUIR. Apagar arquivos, dados, etc.",
-							       "PEGAR. Comando utilizado nas linguagens de programacao, para tratar erros no programa.\nEx: catch(NullExpointerExceptional e){\n\t...\n\t}",
-							       "BAIXAR. Processo no qual O usuario traz um ou mais arquivos hospedados em um servidor, para uma maquina local.",
-							       "CARREGAR. Consiste em carregar um ou mais arquivos para um servidor na internet.",
-							       "LER. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode ler o arquivo.",
-							       "ESCREVER. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode alterar o arquivo.",
-							       "ATUALIZAR. Consiste em fazer alteracoes em arquivos ou software, sendo para corrigir erros ou trazer novidade.",
-							       "INCORPORAR. Tag usada no HTML para inserir multimidias em paginas da internet.",
-							       "EXECUTAR. Tipo de permissao que um usuario tem sobre determinado arquivo. Com essa permissao, o usuario pode abrir o arquivo."}; //Descrições das respectivas palavras
+		char palavras[qtd_palavras][tam_palavras] = {"PRINT","SCAN","INSTALL","RETURN","TRY","DELETE","THROW", 
+							    "DOWNLOAD","UPLOAD","READ","WRITE","UPDATE","EMBED","EXECUTE", "CONTINUE", "BREAK"}; // Palavras do jogo
+		char dicas[qtd_palavras][tam_dicas] = {"PROGRAMACAO", "PROGRAMACAO", "PROGRAMA", "FUNCAO", "EXCESSAO", "TEM NO TECLADO", "EXCESSAO",
+						       "ARQUIVO", "ARQUIVO", "PERMISSAO", "PERMISSAO", "PROGRAMA", "MULTIMIDIA NO HTML", "PERMISSAO", "PROGRAMACAO", "PROGRAMACAO"}; // Dicas das respectivas palavras
+		char definicao[qtd_palavras][tam_definicao] = {"IMPRIMIR. Comando utilizado\n\tnas linguagens de programacao, para exibir uma mensagem ao usuario.\n\n\t Ex: print('Hello, world');",
+							       "DIGITALIZAR. Comando utilizado\n\tnas linguagens de programacao,\n\tpara receber um dado de um usuario.\n\n\t Ex: scanf('%d', inteiro);",
+							       "INSTALAR. Consiste em instalar \n\tum software ou programa em um computador.",
+							       "RETORNAR. Comando utilizado \n\tnas linguagens de programacao, para retornar um dado em uma funcao.\n\n\tEx: return 0;",
+							       "TENTAR. Comando utilizado \n\tnas linguagens de programacao, para tratar erros.\n\n\tEx: try{\n\t\tfor(int X = 0; x < 5; x++)\n\t\t}",
+							       "EXCLUIR. \n\tApagar arquivos, dados, etc.",
+							       "PEGAR. Comando utilizado \n\tnas linguagens de programacao, para tratar erros.\n\n\tEx: catch(NullExpointerExceptional e){\n\t\t...\n\t}",
+							       "BAIXAR. Processo no qual o \n\tusuario traz um ou mais\n\tarquivos hospedados em um servidor, para uma maquina local.",
+							       "CARREGAR. Consiste em enviar \n\tum ou mais arquivos para um servidor na internet.",
+							       "LER. Tipo de permissao que um \n\tusuario tem sobre determinado arquivo.\n\tCom essa permissao, o usuario pode ler o arquivo.",
+							       "ESCREVER. Tipo de permissao\n\tque um usuario tem sobre determinado arquivo.\n\tCom essa permissao, o usuario pode alterar o arquivo.",
+							       "ATUALIZAR. Consiste em fazer \n\talteracoes em arquivos ou software,\n\tsendo para corrigir erros ou trazer novidades.",
+							       "INCORPORAR. Tag usada no HTML \n\tpara inserir multimidias em paginas da internet.",
+							       "EXECUTAR. Tipo de permissao que \n\tum usuario tem sobre determinado arquivo.\n\tCom essa permissao, o usuario pode abrir o arquivo.",
+								   "CONTINUAR. Comando utilizado\n\tnas linguagens de programacao,\n\tpara ir para proximo passo.\n\n\tEx: for(int x = 0; x < 5; x++){\n\t\tcontinue;\n\t}",
+								   "QUEBRAR. Comando utilizado\n\tnas linguagens de programacao, para finalizar um bloco de instrucao.\n\n\tEx: while(a < 0){break;}"}; //Descrições das respectivas palavras
 		char letra; // Letra informada pelo usuário
 		int x = 0; // índice aleatório
 		int erro; // Quantidade de erros do jogador (O jogo termina com o total de 6 erros)
@@ -196,7 +198,7 @@ int main(){
 			} else{
 				printf("\nOPCAO INVALIDA! POR FAVOR, ESCOLHA UMA VALIDA!\n\n");
 				printf("\n\nPRESSIONE QUALQUER TECLA PARA RETORNAR AO MENU.\n");
-				getchar();
+				system("PAUSE");
 				system("cls");
 				new_game = '1';
 				continue;
@@ -235,7 +237,7 @@ int main(){
 					tronco_superior();  cabeca_lose();	pescoco();	tronco_completo();braco_esq_dir(); tronco_lat_n();tronco_lat_n();tronco_lat_n();
 					printf("\n\nQUE PENA! VOCE PERDEU! :(");
 					printf("\n\nPRESSIONE QUALQUER TECLA PARA RETORNAR AO MENU.\n");
-					getchar();
+					system("PAUSE");
 					system("cls");
 					break;
 				}
@@ -287,11 +289,13 @@ int main(){
 				}
 				// Quando o jogador acerta a palavra...
 				if(completou == strlen(palavras[x])){
-					printf("\n\nPARABENS! VOCE GANHOU!\n");
-					printf("\n\nSobre o verbo %s", palavras[x]);
-					printf("\n\n\tTraduzido para o portuguÊs, significa: %s", definicao[x]);
+					printf("\n\nPARABENS! VOCE ACERTOU!\n");
+					printf("\n******************************************************************************\n");
+					printf("\n\tSobre o verbo %s:", palavras[x]);
+					printf("\n\n\tTraduzido para o portugues, significa: %s", definicao[x]);
+					printf("\n\n******************************************************************************\n");
 					printf("\n\nPRESSIONE QUALQUER TECLA PARA RETORNAR AO MENU.\n");
-					getchar();
+					system("PAUSE");
 					system("cls");
 					break;
 				}				
