@@ -156,7 +156,7 @@ int main(){
 							       "ATUALIZAR. Consiste em fazer \n\talteracoes em arquivos ou software,\n\tsendo para corrigir erros ou trazer novidades.",
 							       "INCORPORAR. Tag usada no HTML \n\tpara inserir multimidias em paginas da internet.",
 							       "EXECUTAR. Tipo de permissao que \n\tum usuario tem sobre determinado arquivo.\n\tCom essa permissao, o usuario pode abrir o arquivo.",
-								   "CONTINUAR. Comando utilizado\n\tnas linguagens de programacao,\n\tpara ir para proximo passo.\n\n\tEx: for(int x = 0; x < 5; x++){\n\t\tcontinue;\n\t}",
+								   "CONTINUAR. Comando utilizado\n\tnas linguagens de programacao,\tpara ir para pular para proximo passo.\n\n\tEx: for(int x = 0; x < 5; x++){\n\t\tcontinue;\n\t}",
 								   "QUEBRAR. Comando utilizado\n\tnas linguagens de programacao, para finalizar um bloco de instrucao.\n\n\tEx: while(a < 0){break;}"}; //Descrições das respectivas palavras
 		char letra; // Letra informada pelo usuário
 		int x = 0; // índice aleatório
