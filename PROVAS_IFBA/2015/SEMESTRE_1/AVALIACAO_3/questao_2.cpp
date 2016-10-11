@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 main(){
-	 char string[80], stringJus[80];
-	 int quebrada[80];
-	 
+	 char string[80], stringJus[80];	 
 	 gets(string);
-	 // Contando espaços
+	 // Contando espaÃ§os
 	 int espacos = 0;
 	 for(int x = 0; x < strlen(string); x++){
 	 	if(string[x] == 32){
@@ -25,29 +23,29 @@ main(){
 	 // Justificando a string
 	 int adicionaEspaco = 0, auxJus = 0, primeira = 1;
 	 for(int x = 0; x < strlen(string); x++){
-	 	// Se x for igual a última posição do vetor, e se a última posição for espaço... Break!
+	 	// Se x for igual a Ãºltima posiÃ§Ã£o do vetor, e se a Ãºltima posiÃ§Ã£o for espaÃ§o... Break!
 	 	if(x == strlen(string) - 1 && string[x] == ' '){
 	 		stringJus[auxJus] = 0; // Fim da string
 	 		break;
 	 	}
-	 	if(string[x] != 32){ // Se o caracter da posicao x não for um espaço...
+	 	if(string[x] != 32){ // Se o caracter da posicao x nÃ£o for um espaÃ§o...
 	 		stringJus[auxJus] = string[x]; // A string justificada recebe o caracter
-	 		auxJus++; // Próxima posição da string justificada
-	 		adicionaEspaco = 1; // Já pode adicionar espaço, quando for encontrado um espaço
-	 	} // Se for um espaço, e se adicionaEspaco ativado, e quantidade de distribuição de espaço for igual para todas as palavras...
+	 		auxJus++; // PrÃ³xima posiÃ§Ã£o da string justificada
+	 		adicionaEspaco = 1; // JÃ¡ pode adicionar espaÃ§o, quando for encontrado um espaÃ§o
+	 	} // Se for um espaÃ§o, e se adicionaEspaco ativado, e quantidade de distribuiÃ§Ã£o de espaÃ§o for igual para todas as palavras...
 		 else if(string[x] == 32 && adicionaEspaco == 1 && espacos % (palavras - 1) == 0) { 
 	 		for(int y = 0; y < espacos / (palavras - 1); y++){ 
 	 			stringJus[auxJus] = ' ';
 	 			auxJus++;
 	 		}
 	 		adicionaEspaco = 0;
-	 	} // Se for um espaço, e se adicionaEspaco ativado, e quantidade de distribuição de espaço não for igual para todas as palavras... 
+	 	} // Se for um espaÃ§o, e se adicionaEspaco ativado, e quantidade de distribuiÃ§Ã£o de espaÃ§o nÃ£o for igual para todas as palavras... 
 		 else if(string[x] == 32 && adicionaEspaco == 1 && espacos % (palavras - 1) == 1){ 
 	 		for(int y = 0; y < espacos / (palavras - 1); y++){
-	 			if(primeira){ // Adicionando um espaço a mais na primeira palavra
+	 			if(primeira){ // Adicionando um espaÃ§o a mais na primeira palavra
 	 				stringJus[auxJus] = ' ';
 	 				auxJus++;
-	 				primeira = 0; // Desativando a adicao de um espaço a mais nas próximas palavras.
+	 				primeira = 0; // Desativando a adicao de um espaÃ§o a mais nas prÃ³ximas palavras.
 	 			}
 	 			stringJus[auxJus] = ' ';
 	 			auxJus++;
