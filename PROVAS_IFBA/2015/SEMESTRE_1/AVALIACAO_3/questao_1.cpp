@@ -1,6 +1,6 @@
 #include <stdio.h>
-#define tamL 3
-#define tamC 3
+#define tamL 50
+#define tamC 50
 main(){
 	char matriz[tamL][tamC], cmf;
 	int frequente, maisFrequente = 0;
