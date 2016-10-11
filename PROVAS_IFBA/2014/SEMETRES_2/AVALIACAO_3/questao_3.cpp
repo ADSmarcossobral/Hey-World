@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#define total 3
-
+#define total 100
 struct produto{
 		char nome[50];
 		float preco;
