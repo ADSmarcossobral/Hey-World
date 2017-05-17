@@ -1,7 +1,7 @@
 /*
 	Descrição: Jogo da forca com verbos no Simple Present
 	Versão 1.0
-	
+	Autor: Antônio Marcos S. Ramos
 */
 
 #include <stdio.h>
