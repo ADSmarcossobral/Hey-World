@@ -1,3 +1,8 @@
+/*
+	Link da questão: http://br.spoj.com/problems/NOTAS14/
+	Status da solução: Accepted
+*/
+
 #include <iostream>
 using namespace std;
 
