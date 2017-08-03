@@ -5,7 +5,7 @@
 
 #define TAM 100
 
- typedef struct {
+typedef struct {
     char nome[50];
     char telefone[11];
 } Registro;
@@ -28,8 +28,9 @@ void exibir(Registro *r){
     system("clear");
     printf("========================== LISTA ==========================\n");
     for(int x = 0; x < TAM; x++){
-        printf("Nome: %s", r[x].nome);
-        printf("\nTelefone: %s", r[x].telefone);
+        printf("Nome: %s\n", r[x].nome);
+        printf("\nTelefone: %s\n", r[x].telefone);
+        printf("___________________________________________");
     }
 }
 
@@ -65,10 +66,10 @@ void main(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                fflush(stdin);
+                __fpurge(stdin);
                 printf("\nInforme o nome: ");
                 fgets(nome, TAM, stdin);
-                fflush(stdin);
+                __fpurge(stdin);
                 printf("\nInforme o telefone: ");
                 fgets(nome, TAM, stdin);
                 inserir(r1[pos],nome,telefone);
