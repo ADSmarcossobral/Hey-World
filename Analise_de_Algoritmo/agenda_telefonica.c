@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include <curses.h>
 
-#define TAM 100
+#define TAM_REG 100
 #define TAM_NOME 50
 #define TAM_TEL 11
 
 typedef struct {
-    char nome[50];
-    char telefone[11];
+    char nome[TAM_NOME];
+    char telefone[TAM_TEL];
 } Registro;
 
 void menu(){
@@ -21,7 +20,7 @@ void menu(){
     printf("=======================================\n");
 }
 
-void inserir(Registro *r, char nome[50], char telefone[11]){
+void inserir(Registro *r, char nome[TAM_NOME], char telefone[TAM_TEL]){
     strcpy(r->nome,nome);
     strcpy(r->telefone,telefone);
 }
@@ -37,28 +36,32 @@ void exibir(Registro *r, int pos){
 }
 
 void troca(Registro *r1, Registro *r2){
-    Registro *temp;
-    temp = r1;
-    r1 = r2;
-    r2 = temp;
+    Registro temp;
+    temp = *r1;
+    *r1 = *r2;
+    *r2 = temp;
 }
 
 void SelectionSort(Registro *r, int pos){
-    Registro *menor;
+    char menor[TAM_NOME];
+    int pos_menor;
     for(int x = 0; x < pos - 1; x++){
-        menor = &r[x];
+        strcpy(menor,r[x].nome);
+        pos_menor = x;
         for(int y = x + 1; y < pos; y++){
-            if(strcmp(r[y].nome, menor->nome) < 0)
-                menor = &r[y];
+            if(strcmp(r[y].nome, menor) < 0){
+                strcpy(menor, r[y].nome);
+                pos_menor = y;
+            }                
         }
-        if(strcmp(menor->nome, r[x].nome) != 0){
-            troca(menor, &r[x]);
+        if(pos_menor != x){
+            troca(&r[pos_menor], &r[x]);
         }
     }
 }
 
 void main(){
-    Registro r1[TAM];
+    Registro r1[TAM_REG];
     int op, pos = 0;
     char nome[TAM_NOME], telefone[TAM_TEL];
     do{
@@ -66,10 +69,8 @@ void main(){
         scanf("%d", &op);
         switch(op){
             case 1:
-                //__fpurge(stdin);
                 printf("\nInforme o nome: ");
                 scanf("%s", nome);
-               // __fpurge(stdin);
                 printf("\nInforme o telefone: ");
                 scanf("%s", telefone);
                 inserir(&r1[pos],nome,telefone);
