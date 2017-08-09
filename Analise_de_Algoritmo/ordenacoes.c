@@ -43,6 +43,12 @@ void merge(int *vetor, int inicio, int meio, int fim){
 
 }
 
+void troca(int *a, int *b){
+    int aux = *a;
+    *a = *b;
+    *b = aux;
+}
+
 void mergeSort(int *vetor, int esq, int dir){
     if(esq < dir){
         int m = esq + (dir-esq) / 2;
@@ -50,11 +56,52 @@ void mergeSort(int *vetor, int esq, int dir){
         mergeSort(vetor, m+1, dir);
         merge(vetor, esq, m, dir);
     }
+}  
+
+void particiona(int *vetor, int ini, int fim){
+    //...
+}
+
+double quickSort(int *vetor, int ini, int fim){
+    if(ini >= fim){
+        t1 = clock();
+        return (double) (t1 - t0) / (CLOCK_PER_SECOND);
+    }
+    do{t0 = clock()} while(1 == 0);
+    // ...
 }
 
 double insertionSort(int *vetor, int tam){
     t0 = clock();
     //...
+    t1 = clock();
+    return (double) (t1 - t0) / (CLOCK_PER_SECOND);
+}
+
+double selectionSort(int *vetor, int tam){
+    t0 = clock();
+    int menor;
+    for(int x = 0; x < tam - 1; x++){
+        menor = x;
+        for(int y = x + 1; y < tam; y++){
+            if(vetor[y] < vetor[menor])
+                menor = y;
+        }
+        if(menor != x)
+            troca(vetor[x], vetor[menor]);
+    }
+    t1 = clock();
+    return (double) (t1 - t0) / (CLOCK_PER_SECOND); 
+}
+
+double bubbleSort(int *vetor, int tam){
+    t0 = clock();
+    for(int x = tam - 1; x > 0; x--){
+        for(int y = 0; y < x; y++){
+            if(vetor[y] > vetor[y+1])
+                troca(vetor[y], vetor[y+1]);
+        }
+    }
     t1 = clock();
     return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }
@@ -71,24 +118,5 @@ void exibe(int *vetor, int tam){
 }
 
 void main(){
-    int n = 1000;
-    printf("-> MergeSort <-\n");
-    while(n <= 100000){
-        int vetor[n];
-        preenche(vetor,n);
-        t0 = clock();
-        mergeSort(vetor, 0, n-1);
-        t1 = clock();
-        double tempo = (double) (t1 - t0) / (CLOCKS_PER_SEC);
-        printf("Tempo = %lf, quando n = %d\n", tempo, n);
-        n *= 10;
-    }
-    /*n = 100;
-    printf("-> InsertionSort <-\n");
-    while(n <= 100000){
-        int vetor[n];
-        printf("Tempo = %lf, quando n = %d\n", insertionSort(vetor,n), n);
-        n *= 10;
-    }*/
-
+    
 }

@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "*.tcc": "c",
-        "system_error": "c"
-    }
-}
