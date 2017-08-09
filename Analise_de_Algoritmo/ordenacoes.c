@@ -49,13 +49,16 @@ void troca(int *a, int *b){
     *b = aux;
 }
 
-void mergeSort(int *vetor, int esq, int dir){
+double mergeSort(int *vetor, int esq, int dir){
+    do{t0 = clock();}while(1 == 0);
     if(esq < dir){
         int m = esq + (dir-esq) / 2;
         mergeSort(vetor, esq, dir);
         mergeSort(vetor, m+1, dir);
         merge(vetor, esq, m, dir);
     }
+    t1 = clock();
+    return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }  
 
 void particiona(int *vetor, int ini, int fim){
