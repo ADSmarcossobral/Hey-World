@@ -50,7 +50,6 @@ void troca(int *a, int *b){
 }
 
 double mergeSort(int *vetor, int esq, int dir){
-    do{t0 = clock();}while(1 == 0);
     if(esq < dir){
         int m = esq + (dir-esq) / 2;
         mergeSort(vetor, esq, dir);
@@ -76,7 +75,16 @@ double quickSort(int *vetor, int ini, int fim){
 
 double insertionSort(int *vetor, int tam){
     t0 = clock();
-    //...
+    int atual, y;
+    for(int x = 1; x < tam; x++){
+        atual = vetor[x];
+        y = x - 1;
+        while((y >= 0) && (atual < vetor[y])){
+            vetor[y+1] = vetor[y];
+            y--;
+        }
+        vetor[j+1] = atual;
+    }
     t1 = clock();
     return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }
