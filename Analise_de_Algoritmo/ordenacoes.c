@@ -4,6 +4,12 @@
 
 clock_t t0, t1;
 
+void troca(int *a, int *b){
+    int aux = *a;
+    *a = *b;
+    *b = aux;
+}
+
 void merge(int *vetor, int inicio, int meio, int fim){
     int x, y, z;
     int n1 = meio - inicio + 1;
@@ -41,12 +47,6 @@ void merge(int *vetor, int inicio, int meio, int fim){
         y++;
     }
 
-}
-
-void troca(int *a, int *b){
-    int aux = *a;
-    *a = *b;
-    *b = aux;
 }
 
 double mergeSort(int *vetor, int esq, int dir){
