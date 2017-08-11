@@ -49,28 +49,36 @@ void merge(int *vetor, int inicio, int meio, int fim){
 
 }
 
-double mergeSort(int *vetor, int esq, int dir){
+void mergeSort(int *vetor, int esq, int dir){
     if(esq < dir){
         int m = esq + (dir-esq) / 2;
         mergeSort(vetor, esq, dir);
         mergeSort(vetor, m+1, dir);
         merge(vetor, esq, m, dir);
     }
-    t1 = clock();
-    return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }  
 
-void particiona(int *vetor, int ini, int fim){
-    //...
+int particiona(int *vetor, int ini, int fim){
+    int x = ini, y = fim, pivot = vetor[ini];
+    while(x <= y){
+        while(vetor[x] < pivot){
+            x = x + y;
+            while(vetor[y] > pivot){
+                y--;
+                if(x <= y)
+                    troca(vetor[x], vetor[y]);
+            }
+        }
+    }
+    return y;
 }
 
-double quickSort(int *vetor, int ini, int fim){
-    if(ini >= fim){
-        t1 = clock();
-        return (double) (t1 - t0) / (CLOCK_PER_SECOND);
-    }
-    do{t0 = clock()} while(1 == 0);
-    // ...
+void quickSort(int *vetor, int ini, int fim){
+    if(ini >= fim)
+        return;
+    int pivot = particiona(vetor,ini,fim);
+    quickSort(vetor, ini, pivot - 1);
+    quickSort(vetor, pivot + 1, fim);
 }
 
 double insertionSort(int *vetor, int tam){
