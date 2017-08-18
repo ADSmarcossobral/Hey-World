@@ -83,14 +83,11 @@ void main(){
     char nome[TAM_NOME], telefone[TAM_TEL];
     do{
         menu();
-        __fpurge(stdin);
         scanf("%d", &op);
         switch(op){
             case 1:
-                __fpurge(stdin);
                 printf("\nInforme o nome: ");
                 scanf("%s", nome);
-                __fpurge(stdin);
                 printf("\nInforme o telefone: ");
                 scanf("%s", telefone);
                 inserir(&agenda[pos],nome,telefone);
