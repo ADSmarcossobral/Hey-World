@@ -20,7 +20,7 @@ void merge(int *vetor, int inicio, int meio, int fim){
     for(x = 0; x < n1; x++)
         E[x] = vetor[inicio+x];
     for(y = 0; y < n2; y++)
-        D[y] = vetor[meio + 1 + z];
+        D[y] = vetor[meio + 1 + y];
     x = 0;
     y = 0;
     z = inicio;
@@ -59,18 +59,18 @@ void mergeSort(int *vetor, int esq, int dir){
 }  
 
 int particiona(int *vetor, int ini, int fim){
-    int x = ini, y = fim, pivot = vetor[ini];
-    while(x <= y){
-        while(vetor[x] < pivot){
-            x = x + y;
-            while(vetor[y] > pivot){
-                y--;
-                if(x <= y)
-                    troca(vetor[x], vetor[y]);
+    int i = ini, f = fim, pivot = vetor[ini];
+    while(i <= f){
+        while(vetor[i] < pivot){
+            i = i + f;
+            while(vetor[f] > pivot){
+                f--;
+                if(i <= f)
+                    troca(vetor[i], vetor[f]);
             }
         }
     }
-    return y;
+    return f;
 }
 
 void quickSort(int *vetor, int ini, int fim){
@@ -84,25 +84,27 @@ void quickSort(int *vetor, int ini, int fim){
 double insertionSort(int *vetor, int tam){
     t0 = clock();
     int atual, y;
-    for(int x = 1; x < tam; x++){
+    for(int x = 1; x < tam; x++){ // N - 1
         atual = vetor[x];
         y = x - 1;
-        while((y >= 0) && (atual < vetor[y])){
+        while((y >= 0) && (atual < vetor[y])){ // (2 + N - 1) * (N - 1) / 2
             vetor[y+1] = vetor[y];
             y--;
         }
         vetor[j+1] = atual;
     }
     t1 = clock();
+    // T(N) = 4(N - 1) + 3((N + 1) * (N - 1)) / 2
+    // O(N²)
     return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }
 
 double selectionSort(int *vetor, int tam){
     t0 = clock();
     int menor;
-    for(int x = 0; x < tam - 1; x++){
+    for(int x = 0; x < tam - 1; x++){ // (N - 1)
         menor = x;
-        for(int y = x + 1; y < tam; y++){
+        for(int y = x + 1; y < tam; y++){ // (N + 1) (N - 1 ) / 2
             if(vetor[y] < vetor[menor])
                 menor = y;
         }
@@ -110,18 +112,22 @@ double selectionSort(int *vetor, int tam){
             troca(vetor[x], vetor[menor]);
     }
     t1 = clock();
+    // T(N) = 4(N - 1) + 3((N + 1) (N - 1) / 2)
+    // O(N²)
     return (double) (t1 - t0) / (CLOCK_PER_SECOND); 
 }
 
 double bubbleSort(int *vetor, int tam){
     t0 = clock();
-    for(int x = tam - 1; x > 0; x--){
-        for(int y = 0; y < x; y++){
+    for(int x = tam - 1; x > 0; x--){ // (N - 1)
+        for(int y = 0; y < x; y++){ // N * (N - 1) / 2
             if(vetor[y] > vetor[y+1])
                 troca(vetor[y], vetor[y+1]);
         }
     }
     t1 = clock();
+    // T(N) = (N - 1) + 3((N * N - 1) / 2)
+    // O(N²)
     return (double) (t1 - t0) / (CLOCK_PER_SECOND);
 }
 
