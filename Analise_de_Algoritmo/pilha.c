@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 struct No{
-        int val;
-        struct No *prox;
+    int val;
+    struct No *prox;
 };
 
 typedef struct No No;
@@ -38,7 +38,7 @@ void push(No *novo, No *PILHA){
 
 No *pop(No *PILHA){
     if(!PILHA->prox){
-        printf("\nNao foi possivel retirar, a fila estah vazia!\n");
+        printf("\nNao foi possivel retirar, a pilha estah vazia!\n");
         return NULL;
     }
     No *atual, *ant;

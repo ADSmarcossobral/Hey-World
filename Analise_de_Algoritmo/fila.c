@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 struct No{
-        int val;
-        struct No *prox;
+    int val;
+    struct No *prox;
 };
 
 typedef struct No No;

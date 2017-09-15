@@ -12,6 +12,7 @@ struct node{
 typedef struct node Node;
 
 void limpa(){
+    printf("\nPressione qualquer tecla para continuar\n");
     system("read x");
     system("clear");
 }
@@ -63,6 +64,7 @@ void inserir(Node *raiz, Node *novo){
 
 int menu(){
     limpa();
+    system("clear");
     printf("================ MENU =================\n");
     printf("1 -> Inserir\n");
     printf("2 -> Pre-ordem\n");
@@ -115,7 +117,8 @@ int opcao(int op, Node *raiz){
 }
 
 int main(){
-    Node *raiz = NULL;
+    Node *raiz = (Node *) malloc(sizeof(Node));
+    raiz = NULL;
     while(opcao(menu(),raiz) != 1);
     free(raiz);
     return 0;
