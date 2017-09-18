@@ -1,4 +1,4 @@
-/* Código com tipo de acesso hierárquico em árvores binárias */
+/* Código com tipos de acessos hierárquicos em árvores binárias e outras funções */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +22,15 @@ void checaMem(Node *no){
         printf("\nSem memoria disponivel!\n");
         exit(1);
     }
+}
+
+Node *buscar(Node *r, int busca){
+    if(r == NULL || busca == r->num)
+        return r;
+    else if(busca < r->num)
+        return buscar(r->esq, busca);
+    else
+        return buscar(r->dir, busca);
 }
 
 void preOrdem(Node *r){
@@ -48,18 +57,14 @@ void emOrdem(Node *r){
     }
 }
 
-void inserir(Node *raiz, Node *novo){
-    if(raiz == NULL){
-        raiz = novo;
-    } else{
-        if(novo->num < raiz->num)
-            inserir(raiz->esq, novo);
-        else if(novo->num > raiz->num)
-            inserir(raiz->dir, novo);
-        else{
-            // Código para se for igual
-        }
-    }
+Node *inserir(Node *raiz, Node *novo){
+    if(raiz == NULL)
+        return novo;
+    if(novo->num < raiz->num)
+        raiz->esq = inserir(raiz->esq, novo);
+    else
+        raiz->dir = inserir(raiz->dir, novo);
+    return raiz;
 }
 
 int menu(){
@@ -70,7 +75,8 @@ int menu(){
     printf("2 -> Pre-ordem\n");
     printf("3 -> Pos-ordem\n");
     printf("4 -> Em ordem\n");
-    printf("5 -> Sair\n");
+    printf("5 -> Restaurar arvore\n");
+    printf("6 -> Sair\n");
     printf("=======================================\n");
     int op;
     printf("\nEscolha uma opcao: ");
@@ -86,6 +92,15 @@ int checaRaiz(Node *raiz){
     return 0;
 }
 
+Node *liberarArv(Node *raiz){
+    if(raiz != NULL){
+        liberarArv(raiz->esq);
+        liberarArv(raiz->dir);
+        free(raiz);
+    }
+    return NULL;
+}
+
 int opcao(int op, Node *raiz){
     if(op == 1){
         int num;
@@ -96,7 +111,7 @@ int opcao(int op, Node *raiz){
         novo->num = num;
         novo->esq = NULL;
         novo->dir = NULL;
-        inserir(raiz, novo);
+        raiz = inserir(raiz, novo);
     } else if(op == 2){
         printf("\n================= PRE-ORDEM ================\n");
         if(checaRaiz(raiz))
@@ -109,7 +124,13 @@ int opcao(int op, Node *raiz){
         printf("\n================= EM ORDEM ================\n");
         if(checaRaiz(raiz))
             emOrdem(raiz);
-    } else if(op == 5){
+    }else if(op == 5){
+        raiz = liberarArv(raiz);
+        if(raiz == NULL)
+            printf("\nArvore restaurada!!!\n");
+        else
+            printf("\nNao foi possivel limpar a arvore!!!\n");
+    }else if(op == 6){
         printf("\nPrograma finalizado!!!\n");
         return 1;
     }
@@ -120,6 +141,6 @@ int main(){
     Node *raiz = (Node *) malloc(sizeof(Node));
     raiz = NULL;
     while(opcao(menu(),raiz) != 1);
-    free(raiz);
+    //liberarArv(raiz);
     return 0;
 }
