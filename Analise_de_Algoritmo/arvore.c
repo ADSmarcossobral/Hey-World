@@ -140,7 +140,7 @@ int opcao(int op, Node *raiz){
 int main(){
     Node *raiz = (Node *) malloc(sizeof(Node));
     raiz = NULL;
-    while(opcao(menu(),raiz) != 1);
-    //liberarArv(raiz);
+    while(opcao(menu(), raiz) != 1);
+    liberarArv(raiz);
     return 0;
 }
