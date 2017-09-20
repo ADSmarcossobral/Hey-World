@@ -51,10 +51,10 @@ void merge(int *vetor, int inicio, int meio, int fim){
 
 void mergeSort(int *vetor, int esq, int dir){
     if(esq < dir){
-        int m = esq + (dir-esq) / 2;
-        mergeSort(vetor, esq, dir);
-        mergeSort(vetor, m+1, dir);
-        merge(vetor, esq, m, dir);
+        int meio = (dir + esq) / 2;
+        mergeSort(vetor, esq, meio);
+        mergeSort(vetor, meio+1, dir);
+        merge(vetor, esq, meio, dir);
     }
 }  
 
@@ -204,7 +204,7 @@ int main(){
         t0 = clock();
         quickSort(vetor, 0, n-1);
         t1 = clock();
-        tempo = (t1 - t0) / (CLOCKS_PER_SEC);
+        tempo = (double) (t1 - t0) / (CLOCKS_PER_SEC);
         printf("\nVetor ordenado: \n");
         exibe(vetor, n);
         printf("\nTamanho do vetor = %d\n", n);
@@ -224,7 +224,7 @@ int main(){
         t0 = clock();
         mergeSort(vetor, 0, n-1);
         t1 = clock();
-        tempo = (t1 - t0) / (CLOCKS_PER_SEC);
+        tempo = (double) (t1 - t0) / (CLOCKS_PER_SEC);
         printf("\nVetor ordenado: \n");
         exibe(vetor, n);
         printf("\nTamanho do vetor = %d\n", n);
