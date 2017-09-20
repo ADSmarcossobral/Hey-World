@@ -67,6 +67,39 @@ Node *inserir(Node *raiz, Node *novo){
     return raiz;
 }
 
+Node *remover(Node *r, int num){
+    if(r == NULL)
+        return NULL;
+    if(r->num == num){
+        if(r->esq == NULL && r->dir == NULL){
+            free(r);
+            return r;
+        } else if(r->esq == NULL){
+            Node *t = r;
+            r = r->dir;
+            free(t);
+        } else if(r->dir == NULL){
+            Node *t = r;
+            r = r->esq;
+            free(t);
+        } else{
+            Node *pai = r;
+            Node *f = r->esq;
+            while(f->dir != NULL){
+                pai = f;
+                f = f->dir;
+            }
+            r->num = f->num;
+            f->num = num;
+            r->esq = remover(r->esq, val);
+        }
+        return r;
+    } else if(r->num > num)
+        r->esq = remover(r->esq, num);
+    else
+        r->dir = remover(r->dir, num);
+}
+
 int menu(){
     limpa();
     system("clear");
@@ -138,7 +171,7 @@ int opcao(int op, Node *raiz){
 }
 
 int main(){
-    Node *raiz = (Node *) malloc(sizeof(Node));
+    Node *raiz;
     raiz = NULL;
     while(opcao(menu(), raiz) != 1);
     liberarArv(raiz);
