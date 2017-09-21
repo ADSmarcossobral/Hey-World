@@ -15,7 +15,14 @@ struct registro{
 
 typedef struct registro Registro;
 
+void limpa(){
+    printf("\nPressione enter para continuar\n");
+    system("read x");
+    system("clear");
+}
+
 void menu(){
+    limpa();
     printf("================ MENU =================\n");
     printf("1 -> Inserir aluno na lista\n");
     printf("2 -> Exibir lista de alunos\n");
@@ -132,8 +139,9 @@ double media(Registro *LISTA){
     else{
         Registro *atual = LISTA->prox;
         while(atual != NULL){
-            media = atual->nota;
+            media += atual->nota;
             cont++;
+            atual = atual->prox;
         }
         return media / cont;
     }
@@ -194,6 +202,7 @@ void main(){
     double nota;
     do{
         menu();
+        printf("\nEscolha uma opcao: ");
         scanf("%d", &op);
         switch(op){
             case 1:
