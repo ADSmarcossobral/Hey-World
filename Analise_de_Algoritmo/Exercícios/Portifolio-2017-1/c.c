@@ -231,14 +231,17 @@ void main(){
                 scanf(" %s", matricula);
                 aux = buscarPorMat(matricula, LISTA);
                 toString(aux);
+                break;
             case 6:
                 printf("\nInforme a matricula do aluno a ser excluido: ");
                 scanf(" %s", matricula);
                 free(remover(matricula, LISTA));
+                break;
             case 7:
                 printf("\n____________________________\n");
                 printf("Media da turma: %.2lf", media(LISTA));
                 printf("\n____________________________\n");
+                break;
             case 8:
                 break;
             default:
