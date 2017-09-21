@@ -24,6 +24,22 @@ void checaMem(Node *no){
     }
 }
 
+Node *rotacaoEsq(Node *no){
+    Node *hold;
+    hold = no;
+    no = no->dir;
+    hold->dir = no;
+    return hold;
+}
+
+Node *rocacaoDir(Node *no){
+
+}
+
+Node *rotacaoDupla(Node *no){
+
+}
+
 Node *buscar(Node *r, int busca){
     if(r == NULL || busca == r->num)
         return r;
