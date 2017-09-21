@@ -3,7 +3,14 @@
 
 int TAM = 1;
 
+void pauseClear(){
+    printf("\nPressione enter para continuar...\n");
+    system("read x");
+    system("clear");
+}
+
 int menu(){
+    pauseClear();
     printf("============================= MENU =============================\n");
     printf("1 - PUSH\n");
     printf("2 - POP\n");
@@ -15,6 +22,17 @@ int menu(){
     return op;
 }
 
+void troca(int *a, int *b){
+    int aux = *a;
+    *a = *b;
+    *b = aux;
+}
+
+void firstToEnd(int *vetor){
+    for(int x = 0; x < TAM-1; x++)
+        troca(&vetor[x], &vetor[x+1]);
+}   
+
 void push(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
     *(vetor+TAM-1) = val;
@@ -22,13 +40,14 @@ void push(int *vetor, int val){
 }
 
 void pop(int *vetor){
-    vetor = (int *) realloc(vetor[1], TAM * sizeof(int));
+    firstToEnd(vetor);
+    vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;
 }
 
 void selectAll(int *vetor){
     printf("Fila: ");
-    for(int x = 0; x < TAM; x++)
+    for(int x = 0; x < TAM - 1; x++)
         printf("%d ", *(vetor+x));
     printf("\n");
 }
