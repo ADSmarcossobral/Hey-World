@@ -30,9 +30,9 @@ int maiorSoma(No *r){
 No *add(No* raiz, No* filho){
     if(raiz == NULL)
         return filho;
-    else if(){
+    else
         r->adj.push(filho);
-    }
+    return raiz;
 }
 
 
