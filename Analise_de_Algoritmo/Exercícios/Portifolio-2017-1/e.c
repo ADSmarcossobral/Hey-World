@@ -12,8 +12,8 @@ void pauseClear(){
 int menu(){
     pauseClear();
     printf("============================= MENU =============================\n");
-    printf("1 - ENQUEUE\n");
-    printf("2 - DEQUEUE\n");
+    printf("1 - PUSH\n");
+    printf("2 - POP\n");
     printf("3 - Exibir\n");
     printf("4 - Sair\n");
     printf("\nEscolha uma opcao: ");
@@ -26,15 +26,21 @@ void troca(int *a, int *b){
     int aux = *a;
     *a = *b;
     *b = aux;
-}  
+}
 
-void enqueue(int *vetor, int val){
+void firstToEnd(int *vetor){
+    for(int x = 0; x < TAM-1; x++)
+        troca(&vetor[x], &vetor[x+1]);
+}   
+
+void push(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
     *(vetor+TAM-1) = val;
     TAM++;
 }
 
-void dequeue(int *vetor){
+void pop(int *vetor){
+    firstToEnd(vetor);
     vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;
 }
@@ -51,9 +57,9 @@ int opcao(int *vetor, int op){
         int val;
         printf("\nInforme o valor: ");
         scanf("%d", &val);
-        enqueue(vetor, val);
+        push(vetor, val);
     } else if(op == 2){
-        dequeue(vetor);
+        pop(vetor);
     } else if(op == 3)
         selectAll(vetor);
     else if(op == 4)
