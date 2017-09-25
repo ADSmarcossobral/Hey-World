@@ -28,7 +28,7 @@ void selectionSort(string vetor, int tam){
 }
 
 Arv *insereGrafo(char val, Arv *root){
-    Arv *novo = (Arv *) malloc(sizeof(Arv));
+    Arv *novo = (Arv *) new Arv[1];
     novo->dir = NULL;
     novo->esq = NULL;
     novo->val = val;
@@ -72,8 +72,10 @@ Arv *insereAdj(Arv *adj, Arv *root, char val){
 
 Arv *removeGrafo(char val, Arv *root){
     Arv *tmp = root;
-    Arv *pai;
-    while(tmp->val != val && tmp != NULL){
+    Arv *pai = root;
+    while(tmp != NULL){
+        if(tmp->val == val)
+            break;
         pai = tmp;
         tmp = tmp->dir;
     }
@@ -144,16 +146,29 @@ Arv *liberarArv(Arv *r){
     if(r != NULL){
         liberarArv(r->esq);
         liberarArv(r->dir);
-        free(r);
+        delete(r);
     }
     return NULL;
+}
+
+Arv *temConex(char val, Arv *root){
+    Arv *paiMaior = root;
+    while(1){
+        if(paiMaior->val == val)
+            return NULL;
+        Arv *tmp = paiMaior->esq;
+        while(tmp != NULL){
+            if(tmp->val == val)
+                return paiMaior;
+        }
+        paiMaior = paiMaior->dir;
+    }
 }
 
 int main(){
     int cases;
     cin >> cases;
-    Arv *root = (Arv *) malloc(sizeof(Arv));
-    root = NULL;
+    Arv *root = NULL;
     for(int y = 1; y <= cases; y++){
         int v, e;
         cin >> v >> e;
@@ -164,7 +179,18 @@ int main(){
             cin >> l1 >> l2;
             Arv *adj;
             if(contem(l1,l2,root) == false && contem(l2,l1,root) == false){
-                if(l1 > l2){
+                Arv *pai1, *pai2;
+                pai1 = temConex(l1, root);
+                pai2 = temConex(l2, root);
+                if(pai1 != NULL && pai2 != NULL){
+                    if(pai1->val > pai2->val){
+                        adj = removeGrafo(pai1->val, root);
+                        insereAdj(adj, root, l2);
+                    }else{
+                        adj = removeGrafo(pai2->val, root);
+                        insereAdj(adj, root, l1);
+                    }
+                }else if(l1 > l2){
                     adj = removeGrafo(l1, root);
                     insereAdj(adj, root, l2);
                 } else{
