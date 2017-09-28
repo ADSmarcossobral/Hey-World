@@ -9,8 +9,6 @@ using namespace std;
 int main(){
 	int n;
 	cin >> n;
-	if(n < 1 || n > 200)
-		return 0;
 	int vetor[n];
 	for(int x = 0; x < n; x++){
 		cin >> vetor[x];
