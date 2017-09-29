@@ -289,23 +289,17 @@ namespace forest {
                                                         x->parent->left = x->left;
                                                 delete(x);
                                         } else{
-                                                splay_tree_node <key_t, value_t> *child = x->left;
+                                                binary_search_tree_node <key_t, value_t> *child = x->left;
                                                 while(child->right != nullptr)
                                                         child = child->right;
                                                 x->value = child->value;
                                                 x->key = child->key;
-                                                if(child->left == nullptr){
-                                                        child->right->parent = child->parent;
-                                                        if(child->parent->right->key == child->key)
-                                                                child->parent->right = child->right;
-                                                        else
-                                                                child->parent->left = child->right;
+                                                if(child->left != nullptr){
+                                                        child->parent->right = child->left;
+                                                        child->left->parent = child->parent;
+                                                        child->left = nullptr;
                                                 } else{
-                                                        child->right->parent = child->parent;
-                                                        if(child->parent->right->key == child->key)
-                                                                child->parent->right = child->right;
-                                                        else
-                                                                child->parent->left = child->right;
+                                                        child->parent->right = nullptr;
                                                 }
                                                 delete(child);
                                         }
