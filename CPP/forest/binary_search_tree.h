@@ -267,10 +267,14 @@ namespace forest {
                                         x = x->left;
                                 }else if(key > x->key){
                                         x = x->right;
-                                else{
+                                }else{
                                         if(x->left == nullptr && x->right == nullptr){
+                                                if(x->parent->right->key == x->key)
+                                                        x->parent->right = nullptr;
+                                                else
+                                                        x->parent->left = nullptr;
                                                 delete(x);
-                                        } else if(x->left == nullptr){
+                                        }else if(x->left == nullptr){
                                                 x->right->parent = x->parent;
                                                 if(x->parent->right->key == x->key)
                                                         x->parent->right = x->right;
