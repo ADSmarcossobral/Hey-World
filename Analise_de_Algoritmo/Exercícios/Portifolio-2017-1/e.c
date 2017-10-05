@@ -33,13 +33,13 @@ void firstToEnd(int *vetor){
         troca(&vetor[x], &vetor[x+1]);
 }   
 
-void push(int *vetor, int val){
+void enqueue(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
     *(vetor+TAM-1) = val;
     TAM++;
 }
 
-void pop(int *vetor){
+void dequeue(int *vetor){
     firstToEnd(vetor);
     vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;

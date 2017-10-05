@@ -24,7 +24,7 @@ namespace arvore{
         }
         // Exibição da estrutura
         void toString(){
-            cout << "====================================================" << endl;
+            cout << "____________________________________________________" << endl;
             cout << "Matricula: " << this->matricula << endl;
             cout << "Nome: " << this->nome << endl;
             cout << "Endereco: " << this->endereco << endl;
@@ -34,7 +34,7 @@ namespace arvore{
             cout << "Nota 2: " << setprecision(2) << this->n2 << endl;
             cout << "Nota 3: " << setprecision(2) << this->n3 << endl;
             cout << "Media: " << setprecision(2) << this->media << endl;
-            cout << "====================================================" << endl;
+            cout << "____________________________________________________" << endl;
         }
         // Calcula a média
         double getMedia(){
@@ -166,22 +166,32 @@ namespace arvore{
                     atual = atual->dir;
                 }else{
                     if(atual->esq == nullptr && atual->dir == nullptr){
-                        if(paiAtual->dir->matricula.compare(matricula) == 0)
-                            paiAtual->dir = nullptr;
-                        else
-                            paiAtual->esq = nullptr;
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = nullptr;
+                            else
+                                paiAtual->esq = nullptr;
+                        }
                         delete(atual);
                     }else if(atual->esq == nullptr){
-                        if(paiAtual->dir->matricula.compare(matricula) == 0)
-                            paiAtual->dir = atual->dir;
-                        else
-                            paiAtual->esq = atual->dir;
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = atual->dir;
+                            else
+                                paiAtual->esq = atual->dir;
+                        }else{
+                            raiz = atual->dir;
+                        }
                         delete(atual);
                     } else if(atual->dir == nullptr){
-                        if(paiAtual->dir->matricula.compare(matricula) == 0)
-                            paiAtual->dir = atual->esq;
-                        else
-                            paiAtual->esq = atual->esq;
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = atual->esq;
+                            else
+                                paiAtual->esq = atual->esq;
+                        }else{
+                            raiz = atual->esq;
+                        }
                         delete(atual);
                     } else{
                         aluno_node *filho = atual->esq;

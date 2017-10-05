@@ -28,19 +28,19 @@ void troca(int *a, int *b){
     *b = aux;
 }  
 
-void enqueue(int *vetor, int val){
+void push(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
     *(vetor+TAM-1) = val;
     TAM++;
 }
 
-void dequeue(int *vetor){
+void pop(int *vetor){
     vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;
 }
 
 void selectAll(int *vetor){
-    printf("Fila: ");
+    printf("Pilha: ");
     for(int x = 0; x < TAM - 1; x++)
         printf("%d ", *(vetor+x));
     printf("\n");
@@ -51,9 +51,9 @@ int opcao(int *vetor, int op){
         int val;
         printf("\nInforme o valor: ");
         scanf("%d", &val);
-        enqueue(vetor, val);
+        push(vetor, val);
     } else if(op == 2){
-        dequeue(vetor);
+        pop(vetor);
     } else if(op == 3)
         selectAll(vetor);
     else if(op == 4)
