@@ -297,16 +297,10 @@ namespace forest {
                                                 if(child->left != nullptr){
                                                         child->parent->right = child->left;
                                                         child->left->parent = child->parent;
-<<<<<<< HEAD
                                                         delete(child);
                                                 } else{
                                                         child->parent->right = nullptr;
                                                         delete(child);
-=======
-                                                        child->left = nullptr;
-                                                } else{
-                                                        child->parent->right = nullptr;
->>>>>>> fa3cd93c38942e9097f5a59c081d49a1a9340246
                                                 }
                                                 delete(child);
                                         }
