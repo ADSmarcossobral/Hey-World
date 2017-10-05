@@ -141,7 +141,3 @@ void exibe(int *vetor, int tam){
         printf("%d ", vetor[x]);
     printf("\n");
 }
-
-void main(){
-    
-}
