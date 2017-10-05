@@ -35,7 +35,7 @@ void firstToEnd(int *vetor){
 
 void enqueue(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
-    *(vetor+TAM-1) = val; // Mesmo que vetor[TAM-1] (Menos 1 porque o tamanho parte 1)
+    *(vetor+TAM-1) = val; // Mesmo que vetor[TAM-1] (Menos 1 porque o tamanho parte de 1)
     TAM++;
 }
 
