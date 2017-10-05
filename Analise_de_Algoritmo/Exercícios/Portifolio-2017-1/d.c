@@ -12,8 +12,8 @@ void pauseClear(){
 int menu(){
     pauseClear();
     printf("============================= MENU =============================\n");
-    printf("1 - ENQUEUE\n");
-    printf("2 - DEQUEUE\n");
+    printf("1 - PUSH\n");
+    printf("2 - POP\n");
     printf("3 - Exibir\n");
     printf("4 - Sair\n");
     printf("\nEscolha uma opcao: ");
@@ -30,16 +30,24 @@ void troca(int *a, int *b){
 
 void push(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
-    *(vetor+TAM-1) = val;
+    *(vetor+TAM-1) = val; // Mesmo que vetor[TAM-1] (Menos 1 porque o tamanho parte de 1)
     TAM++;
 }
 
 void pop(int *vetor){
+    if(TAM == 1){
+        printf("\nPilha Vazia!\n");
+        return;
+    }
     vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;
 }
 
 void selectAll(int *vetor){
+    if(TAM == 1){
+        printf("\nPilha Vazia!\n");
+        return;
+    }
     printf("Pilha: ");
     for(int x = 0; x < TAM - 1; x++)
         printf("%d ", *(vetor+x));
@@ -67,4 +75,5 @@ int main(){
     int *vetor;
     vetor = (int *) malloc(TAM * sizeof(int));
     while(opcao(vetor, menu()));
+    free(vetor);
 }

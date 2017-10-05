@@ -26,27 +26,29 @@ void troca(int *a, int *b){
     int aux = *a;
     *a = *b;
     *b = aux;
-}
+}  
 
-void firstToEnd(int *vetor){
-    for(int x = 0; x < TAM-1; x++)
-        troca(&vetor[x], &vetor[x+1]);
-}   
-
-void enqueue(int *vetor, int val){
+void push(int *vetor, int val){
     vetor = (int *) realloc(vetor, TAM * sizeof(int));
-    *(vetor+TAM-1) = val;
+    *(vetor+TAM-1) = val; // Mesmo que vetor[TAM-1] (Menos 1 porque o tamanho parte de 1)
     TAM++;
 }
 
-void dequeue(int *vetor){
-    firstToEnd(vetor);
+void pop(int *vetor){
+    if(TAM == 1){
+        printf("\nPilha Vazia!\n");
+        return;
+    }
     vetor = (int *) realloc(vetor, TAM - 2 * sizeof(int));
     TAM--;
 }
 
 void selectAll(int *vetor){
-    printf("Fila: ");
+    if(TAM == 1){
+        printf("\nPilha Vazia!\n");
+        return;
+    }
+    printf("Pilha: ");
     for(int x = 0; x < TAM - 1; x++)
         printf("%d ", *(vetor+x));
     printf("\n");
@@ -73,4 +75,5 @@ int main(){
     int *vetor;
     vetor = (int *) malloc(TAM * sizeof(int));
     while(opcao(vetor, menu()));
+    free(vetor);
 }
