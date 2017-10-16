@@ -5,6 +5,7 @@ using namespace std;
 namespace arvore{
     struct aluno_node{
         string matricula, nome, endereco, tel, email;
+        int fb; // Fator de balanço
         double n1, n2, n3, media;
         aluno_node *dir;
         aluno_node *esq;
@@ -43,7 +44,6 @@ namespace arvore{
     };
     class aluno{
     private:
-        aluno_node *raiz;
         // Percorrendo em pré ordem
         void pre_ordem(aluno_node *node){
             if(node == nullptr)
@@ -68,11 +68,18 @@ namespace arvore{
             pos_ordem(node->dir);
             node->toString();
         }
-        // Altura da árvore
-        int altura(aluno_node *node){
-            if(node == nullptr)
-                return 0;
-            return max(altura(node->esq), altura(node->dir) + 1);
+        // Exibe vetor
+        void printVetor(aluno_node *vetor, int TAM){
+            for(int x = 0; x < TAM; x++)
+                vetor[x].toString();
+        }
+        // Exclue todos os registros da árvore
+        void limpar(aluno_node *node){
+            if(raiz != nullptr){
+                limpar(raiz->esq);
+                limpar(raiz->dir);
+                delete(raiz);
+            }
         }
         // Tamanho da árvore
         int tamanho(aluno_node *node){
@@ -80,45 +87,79 @@ namespace arvore{
                 return 0;
             return tamanho(node->esq) + tamanho(node->dir) + 1;
         }
-        /*// Rotaciona para direita
-        void rotacao_dir(aluno_node rotacao_root){
-
-        }
-        // Rotaciona para esquerda
-        void rotacao_esq(aluno_node rotacao_root){
-
-        }*/
     public:
+        aluno_node *raiz;
         // Construtor da classe
         aluno(){
             raiz = nullptr;
         }
-        // Percorre em pré ordem a partir da raiz
+        // Percorrendo em pré ordem
         void pre_ordem(){
             pre_ordem(raiz);
         }
-        // Percorre em pós ordem a partir da raiz
-        void pos_ordem(){
-            pos_ordem(raiz);
-        }
-        // Percorre em ordem a partir da raiz
+        // Percorrendo em ordem
         void em_ordem(){
             em_ordem(raiz);
         }
+        // Percorrendo em pós ordem
+        void pos_ordem(){
+            pos_ordem(raiz);
+        }
+        // Exclue todos os registros da árvore
+        void limpar(){
+            limpar(raiz);
+        }
+        // Altura da árvore
+        int altura(aluno_node *node){
+            if(node == nullptr)
+                return -1;
+            return max(altura(node->esq), altura(node->dir) + 1);
+        }
+        // Tamanho da árvore
+        int tamanho(){
+            return tamanho(raiz);
+        }
+        // Retorna true se a árvore for avl
+        bool isAVL(aluno_node *node){
+            int hd = altura(node->dir), he = altura(node->esq);
+            return ((hd - he) < 2) && ((hd - he) > -2);
+        }
         // Rotaciona para direita
-        void rotacao_dir(aluno_node rotacao_root){
-            
+        void rotacao_dir(aluno_node *node){
+            aluno_node *a, *tmp;
+            a = node->esq;
+            tmp = a->dir;
+            a->dir = node;
+            node->esq = tmp;
+            node = a;
         }
         // Rotaciona para esquerda
-        void rotacao_esq(aluno_node rotacao_root){
-            
+        void rotacao_esq(aluno_node *node){
+            aluno_node *a, *tmp;
+            a = node->dir;
+            tmp = a->esq;
+            a->esq = node;
+            node->dir = tmp;
+            node = a;
+        }
+        // Balanceia a árvore
+        void balancear(aluno_node *node){
+            int h = altura(node);
+            if(h <= 1 || h >= -1){
+                if(h < 0){
+
+                } else{
+
+                }
+            }
         }
         // Insere um novo aluno na árvore
         void inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
             aluno_node *novo = new aluno_node(matricula, nome, endereco, email, tel, n1, n2, n3);
-            if(raiz == nullptr)
+            if(raiz == nullptr){
                 raiz = novo;
-            else{
+                return;
+            }else{
                 aluno_node *atual = raiz;
                 aluno_node *pai = nullptr;
                 while(atual != nullptr || atual != nullptr){
@@ -137,9 +178,12 @@ namespace arvore{
                 else
                     pai->esq = novo;
             }
+            if(!isAVL(raiz)){
+                balancear(raiz);
+            }
         }
         // Busca um aluno na lista a partir da matrícula
-        const aluno_node *buscar(string matricula){
+        aluno_node *buscar(string matricula){
             aluno_node *atual = raiz;
             int comp;
             while(atual != nullptr){
@@ -208,18 +252,77 @@ namespace arvore{
                         }
                         delete(filho);
                     }
+                    // balancear(raiz);
                     return true;
                 }
             }
             return false;
-        }  
+        }
+        // Retorna verdadeiro se a árvore estiver vazia
         bool vazia() {
             if (raiz == nullptr) {
                     return true;
             } else {
                     return false;
             }
-        } 
+        }
+        // Preenche um vetor com todos os nós da árvore, percorrendo em pós-ordem
+        void toVetor(aluno_node *vetor, int *indice, aluno_node *raiz){
+            if(raiz == nullptr)
+                return;
+            toVetor(vetor, indice, raiz->esq);
+            toVetor(vetor, indice, raiz->dir);
+            vetor[*indice] = *raiz;
+            *indice = *indice + 1;
+        }
+        // Retorna a média da média de todos os alunos da árvore
+        double mediaTurma(){
+            double media = 0;
+            int TAM = tamanho(), indice = 0;
+            aluno_node *vetor = (aluno_node *) malloc(TAM * sizeof(aluno_node));
+            toVetor(vetor, &indice, raiz);
+            for(int x = 0; x < TAM; x++)
+                media += vetor[x].getMedia();
+            return media / TAM;
+        }
+        // Troca a posição de dois nós em um vetor
+        void troca(aluno_node *a, aluno_node *b){
+            aluno_node aux = *a;
+            *a = *b;
+            *b = aux;
+        }
+        // Particiona um vetor (Quick Sort)
+        int particiona(aluno_node *vetor, int ini, int fim){
+            int i = ini, f = fim;
+            aluno_node pivot = vetor[ini];
+            while(i <= f){
+                while(vetor[i].matricula.compare(pivot.matricula) == -1){
+                    i = i + f;
+                    while(vetor[f].matricula.compare(pivot.matricula) == 1){
+                        f--;
+                        if(i <= f)
+                            troca(&vetor[i], &vetor[f]);
+                    }
+                }
+            }
+            return f;
+        }
+        // Ordena um vetor de aluno_node por Quick Sort
+        void quickSort(aluno_node *vetor, int ini, int fim){
+            if(ini >= fim)
+                return;
+            int pivot = particiona(vetor,ini,fim);
+            quickSort(vetor, ini, pivot - 1);
+            quickSort(vetor, pivot + 1, fim);
+        }
+        // Ordenador
+        void ordena(){
+            int TAM = tamanho(raiz);
+            aluno_node *vetor = (aluno_node *) malloc(TAM * sizeof(aluno_node));
+            toVetor(vetor, 0, raiz);
+            quickSort(vetor, 0, TAM - 1);
+            printVetor(vetor, TAM);
+        }
     };
 
 }
