@@ -154,6 +154,18 @@ namespace arvore{
                 }
             }
         }
+        // Copia os dados de um nó para outro
+        void copiar(aluno_node *copiando, aluno_node *copiado){
+            copiando->matricula = copiado->matricula;
+            copiando->nome = copiado->nome;
+            copiando->tel = copiado->tel;
+            copiando->endereco = copiado->endereco;
+            copiando->email = copiado->email;
+            copiando->n1 = copiado->n1;
+            copiando->n2 = copiado->n2;
+            copiando->n3 = copiado->n3;
+            copiando->media = copiado->media;
+        }
         // Insere um novo aluno na árvore
         void inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
             aluno_node *novo = new aluno_node(matricula, nome, endereco, email, tel, n1, n2, n3);
@@ -245,15 +257,7 @@ namespace arvore{
                             paiFilho = filho;
                             filho = filho->dir;
                         }     
-                        atual->matricula = filho->matricula;
-                        atual->nome = filho->nome;
-                        atual->tel = filho->tel;
-                        atual->endereco = filho->endereco;
-                        atual->email = filho->email;
-                        atual->n1 = filho->n1;
-                        atual->n2 = filho->n2;
-                        atual->n3 = filho->n3;
-                        atual->media = filho->media;
+                        copiar(atual, filho);
                         atual->esq = nullptr;
                         if(raiz->matricula.compare(filho->matricula) == 0)
                             raiz = atual;
@@ -302,18 +306,22 @@ namespace arvore{
         }
         // Particiona um vetor (Quick Sort)
         int particiona(aluno_node *vetor, int ini, int fim){
-            int i = ini, f = fim;
-            aluno_node pivot = vetor[ini];
+            int i = ini + 1, f = fim;
+            aluno_node *pivot = (aluno_node *) malloc(sizeof(aluno_node));
+            copiar(pivot, &vetor[ini]);
             while(i <= f){
-                while(vetor[i].matricula.compare(pivot.matricula) == -1){
-                    i = i + f;
-                    while(vetor[f].matricula.compare(pivot.matricula) == 1){
-                        f--;
-                        if(i <= f)
-                            troca(&vetor[i], &vetor[f]);
-                    }
+                if(vetor[i].matricula.compare(pivot->matricula) <= 0)
+                    i++;
+                else if(pivot->matricula.compare(vetor[f].matricula) < 0)
+                    f--;
+                else{
+                    troca(&vetor[i], &vetor[f]);
+                    i++;
+                    f--;
                 }
             }
+            copiar(&vetor[ini], &vetor[f]);
+            copiar(&vetor[f], pivot);
             return f;
         }
         // Ordena um vetor de aluno_node por Quick Sort
