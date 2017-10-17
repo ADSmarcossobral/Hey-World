@@ -109,26 +109,34 @@ Registro *buscarPorMat(char *matricula, Registro *LISTA){
 }
 
 void troca(Registro *r1, Registro *r2){
-    Registro temp;
-    temp = *r1;
-    *r1 = *r2;
-    *r2 = temp;
+    char *nome = (char *) malloc(strlen(r1->nome) * sizeof(char));
+    char *matricula = (char *) malloc(strlen(r1->matricula) * sizeof(char));
+    double nota = r1->nota;
+    strcpy(nome, r1->nome);
+    strcpy(matricula, r1->matricula);
+    strcpy(r1->nome, r2->nome);
+    strcpy(r1->matricula, r2->matricula);
+    r1->nota = r2->nota;
+    strcpy(r2->nome, nome);
+    strcpy(r2->matricula, matricula);
+    r2->nota = nota;
+    free(nome);
+    free(matricula);
 }
 
-void apagarLista(Registro *LISTA){
+int apagarLista(Registro *LISTA){
     if(LISTA->prox == NULL)
-        printf("\nNao existe registros na lista!\n");
-    else{
-        Registro *atual;
-        Registro *proxReg;
-        atual = LISTA->prox;
+        return 0;
+    Registro *atual;
+    Registro *proxReg;
+    atual = LISTA->prox;
+    proxReg = atual->prox;
+    do{
+        free(atual);
+        atual = proxReg;
         proxReg = atual->prox;
-        do{
-            free(atual);
-            atual = proxReg;
-            proxReg = atual->prox;
-        } while(atual != NULL);
-    }
+    } while(atual != NULL);
+    return 1;
 }
 
 double media(Registro *LISTA){
@@ -206,12 +214,16 @@ void main(){
         scanf("%d", &op);
         switch(op){
             case 1:
+                setbuf(stdin, NULL);
                 printf("\nInforme o nome: ");
-                scanf("%s", nome);
+                fgets(nome, TAM_NOME, stdin);
+                setbuf(stdin, NULL);
                 printf("\nInforme a matricula: ");
-                scanf("%s", matricula);
+                fgets(matricula, TAM_MAT, stdin);
+                setbuf(stdin, NULL);
                 printf("\nInforme a nota: ");
                 scanf("%lf", &nota);
+                setbuf(stdin, NULL);
                 inserir(LISTA, nome, matricula, nota);
                 pos++;
                 break;
@@ -230,12 +242,20 @@ void main(){
                 printf("\nInforme a matricula do aluno a ser procurado: ");
                 scanf(" %s", matricula);
                 aux = buscarPorMat(matricula, LISTA);
-                toString(aux);
+                printf("\n_____________________________________________\n");
+                if(aux != NULL)
+                    toString(aux);
+                else
+                    printf("\nAluno nao encontrado!\n");
                 break;
             case 6:
                 printf("\nInforme a matricula do aluno a ser excluido: ");
                 scanf(" %s", matricula);
-                free(remover(matricula, LISTA));
+                aux = remover(matricula, LISTA);
+                if(aux != NULL)
+                    free(aux);
+                else
+                    printf("\nAluno nao encontrado!\n");
                 break;
             case 7:
                 printf("\n____________________________\n");
