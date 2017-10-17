@@ -18,5 +18,9 @@ int main(){
     teste.removerAluno("2016116007");
     // Pré-ordem
     teste.pre_ordem();
+    // Limpa árvore
+    teste.limpar();
+    // Pré-ordem
+   teste.pre_ordem();
 
 }

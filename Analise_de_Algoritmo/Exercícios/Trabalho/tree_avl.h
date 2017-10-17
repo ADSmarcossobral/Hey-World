@@ -75,10 +75,10 @@ namespace arvore{
         }
         // Exclue todos os registros da árvore
         void limpar(aluno_node *node){
-            if(raiz != nullptr){
-                limpar(raiz->esq);
-                limpar(raiz->dir);
-                delete(raiz);
+            if(node != nullptr){
+                limpar(node->esq);
+                limpar(node->dir);
+                delete(node);
             }
         }
         // Tamanho da árvore
@@ -108,6 +108,7 @@ namespace arvore{
         // Exclue todos os registros da árvore
         void limpar(){
             limpar(raiz);
+            raiz = nullptr;
         }
         // Altura da árvore
         int altura(aluno_node *node){
