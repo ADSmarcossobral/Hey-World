@@ -242,15 +242,23 @@ namespace arvore{
                         aluno_node *filho = atual->esq;
                         aluno_node *paiFilho = atual;
                         while(filho->dir != nullptr){
-                            filho = filho->dir;
                             paiFilho = filho;
+                            filho = filho->dir;
                         }     
                         atual->matricula = filho->matricula;
-                        if(filho->esq != nullptr){
-                            paiFilho->dir = filho->esq;
-                        } else{
-                            paiFilho->dir = nullptr;
-                        }
+                        atual->nome = filho->nome;
+                        atual->tel = filho->tel;
+                        atual->endereco = filho->endereco;
+                        atual->email = filho->email;
+                        atual->n1 = filho->n1;
+                        atual->n2 = filho->n2;
+                        atual->n3 = filho->n3;
+                        atual->media = filho->media;
+                        atual->esq = nullptr;
+                        if(raiz->matricula.compare(filho->matricula) == 0)
+                            raiz = atual;
+                        else
+                            paiAtual->dir = atual;
                         delete(filho);
                     }
                     // balancear(raiz);
@@ -318,9 +326,9 @@ namespace arvore{
         }
         // Ordenador
         void ordena(){
-            int TAM = tamanho(raiz);
+            int TAM = tamanho(raiz), indice = 0;
             aluno_node *vetor = (aluno_node *) malloc(TAM * sizeof(aluno_node));
-            toVetor(vetor, 0, raiz);
+            toVetor(vetor, &indice, raiz);
             quickSort(vetor, 0, TAM - 1);
             printVetor(vetor, TAM);
         }
