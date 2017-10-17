@@ -87,6 +87,12 @@ namespace arvore{
                 return 0;
             return tamanho(node->esq) + tamanho(node->dir) + 1;
         }
+        // Altura da árvore
+        int altura(aluno_node *node){
+            if(node == nullptr)
+                return -1;
+            return max(altura(node->esq), altura(node->dir) + 1);
+        }
     public:
         aluno_node *raiz;
         // Construtor da classe
@@ -112,9 +118,7 @@ namespace arvore{
         }
         // Altura da árvore
         int altura(aluno_node *node){
-            if(node == nullptr)
-                return -1;
-            return max(altura(node->esq), altura(node->dir) + 1);
+            return altura(raiz);
         }
         // Tamanho da árvore
         int tamanho(){
@@ -265,7 +269,9 @@ namespace arvore{
                             paiAtual->dir = atual;
                         delete(filho);
                     }
-                    // balancear(raiz);
+                    if(!isAVL(raiz)){
+                        balancear(raiz);
+                    }
                     return true;
                 }
             }

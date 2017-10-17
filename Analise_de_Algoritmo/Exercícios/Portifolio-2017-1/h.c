@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define TAM_REG 100
 #define TAM_NOME 50
@@ -24,17 +25,24 @@ void limpa(){
     system("clear");
 }
 
-void checaMem(Node *no){
-    if(!no){
-        printf("\nSem memoria disponivel!\n");
-        exit(1);
-    }
+int menu(){
+    limpa();
+    printf("================ MENU =================\n");
+    printf("1 -> Inserir aluno na lista\n");
+    printf("2 -> Listar alunos\n");
+    printf("3 -> Exibir altura da árvore\n");
+    printf("4 -> Buscar aluno por matricula\n");
+    printf("5 -> Remover aluno da lista\n");
+    printf("6 -> Sair\n");
+    printf("=======================================\n");
+    int op;
+    printf("\nEscolha uma opcao: ");
+    scanf("%d", &op);
+    return op;
 }
 
-int altura(Node *raiz){
-    if(raiz == NULL)
-        return 0;
-    return altura(raiz->esq) + altura(raiz->dir) + 1;
+Node *newNode(){
+    return (Node *) malloc(sizeof(Node));
 }
 
 void toString(Node *tmp){
@@ -43,6 +51,40 @@ void toString(Node *tmp){
     printf("\nMatricula: %s\n", tmp->matricula);
     printf("\nNota: %.2lf\n", tmp->nota);
     printf("___________________________________________\n");
+}
+
+void emOrdem(Node *node){
+    if(node == NULL){
+        return;
+    }
+    emOrdem(node->esq);
+    toString(node);
+    emOrdem(node->dir);
+}
+
+int max(int a, int b){
+    if(a > b)
+        return a;
+    return b;
+}
+
+void checaMem(Node *no){
+    if(!no){
+        printf("\nSem memoria disponivel!\n");
+        exit(1);
+    }
+}
+
+int tamanho(Node *node){
+    if(node == NULL)
+        return 0;
+    return tamanho(node->esq) + tamanho(node->dir) + 1;
+}
+
+int altura(Node *node){
+    if(node == NULL)
+        return -1;
+    return max(altura(node->esq), altura(node->dir) + 1);
 }
 
 Node *buscar(Node *r, char* busca){
@@ -55,14 +97,30 @@ Node *buscar(Node *r, char* busca){
         return buscar(r->dir, busca);
 }
 
-Node *inserir(Node *raiz, Node *novo){
-    if(raiz == NULL)
-        return novo;
-    if(strcmp(novo->matricula, raiz->matricula) < 0)
-        raiz->esq = inserir(raiz->esq, novo);
-    else
-        raiz->dir = inserir(raiz->dir, novo);
-    return raiz;
+void inserir(Node *raiz, Node *novo){
+    if(raiz == NULL){
+        raiz = novo;
+        return;
+    }else{
+        Node *atual = raiz;
+        Node *pai = NULL;
+        while(atual != NULL || atual != NULL){
+            int comp = strcmp(atual->matricula, novo->matricula);
+            pai = atual;
+            if(comp < 0)
+               atual = atual->dir;
+            else if(comp > 0)
+                atual = atual->esq;
+            else{
+                printf("O aluno já se encontra cadastrado!\n");
+                return;
+            }
+        }
+        if(strcmp(pai->matricula, novo->matricula) < 0)
+            pai->dir = novo;
+        else
+            pai->esq = novo;
+    }
 }
 
 Node *remover(Node *r, char* busca){
@@ -99,22 +157,6 @@ Node *remover(Node *r, char* busca){
         r->esq = remover(r->esq, busca);
     else
         r->dir = remover(r->dir, busca);
-}
-
-int menu(){
-    limpa();
-    printf("================ MENU =================\n");
-    printf("1 -> Inserir aluno na lista\n");
-    printf("2 -> Listar alunos\n");
-    printf("3 -> Exibir altura da árvore\n");
-    printf("4 -> Buscar aluno por matricula\n");
-    printf("5 -> Remover aluno da lista\n");
-    printf("6 -> Sair\n");
-    printf("=======================================\n");
-    int op;
-    printf("\nEscolha uma opcao: ");
-    scanf("%d", &op);
-    return op;
 }
 
 int checaRaiz(Node *raiz){
@@ -189,7 +231,9 @@ void quickSort(Node *vetor, int ini, int fim){
 }
 
 void listarOrdenado(Node *raiz){
-    int TAM = altura(raiz), indice = 0;
+    int TAM = tamanho(raiz), indice = 0;
+    printf("Tamanho = %d", TAM);
+    system("read x");
     Node *vetor = (Node *) malloc(TAM * sizeof(Node));
     toVetor(vetor, &indice, raiz);
     quickSort(vetor, 0, TAM - 1);
@@ -206,19 +250,19 @@ int opcao(int op, Node *raiz){
         fgets(nome, TAM_NOME, stdin);
         setbuf(stdin, NULL);
         printf("\nInforme a matricula: ");
-        fgets(matricula, TAM_MAT, stdin);
+        scanf(" %s", matricula);
         setbuf(stdin, NULL);
         printf("\nInforme a nota: ");
         scanf("%lf", &nota);
         setbuf(stdin, NULL);
-        Node *novo = (Node *)malloc(sizeof(Node));
+        Node *novo = newNode();
         checaMem(novo);
         strcpy(novo->matricula, matricula);
         strcpy(novo->nome, nome);
         novo->nota = nota;
         novo->esq = NULL;
         novo->dir = NULL;
-        raiz = inserir(raiz, novo);
+        inserir(raiz, novo);
     } else if(op == 2){
         printf("\n================= ALUNOS ================\n");
         listarOrdenado(raiz);
@@ -247,7 +291,8 @@ int opcao(int op, Node *raiz){
     }else if(op == 6){
         printf("\nPrograma finalizado!!!\n");
         return 1;
-    }
+    } else if(op == 7)
+        emOrdem(raiz);
     return 0;
 }
 
