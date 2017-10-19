@@ -179,7 +179,7 @@ namespace arvore{
             }else{
                 aluno_node *atual = raiz;
                 aluno_node *pai = nullptr;
-                while(atual != nullptr || atual != nullptr){
+                while(atual != nullptr){
                     pai = atual;
                     if(atual->matricula.compare(matricula) < 0)
                        atual = atual->dir;
@@ -232,8 +232,11 @@ namespace arvore{
                                 paiAtual->dir = nullptr;
                             else
                                 paiAtual->esq = nullptr;
+                            delete(atual);
+                        }else{
+                            delete(atual);
+                            raiz = nullptr;
                         }
-                        delete(atual);
                     }else if(atual->esq == nullptr){
                         if(paiAtual != nullptr){
                             if(paiAtual->dir->matricula.compare(matricula) == 0)
@@ -269,16 +272,16 @@ namespace arvore{
                             paiAtual->dir = atual;
                         delete(filho);
                     }
-                    if(!isAVL(raiz)){
+                    /*if(!isAVL(raiz)){
                         balancear(raiz);
-                    }
+                    }*/
                     return true;
                 }
             }
             return false;
         }
         // Retorna verdadeiro se a árvore estiver vazia
-        bool vazia() {
+        bool ehVazia() {
             if (raiz == nullptr) {
                     return true;
             } else {
