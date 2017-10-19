@@ -117,7 +117,7 @@ namespace arvore{
             raiz = nullptr;
         }
         // Altura da árvore
-        int altura(aluno_node *node){
+        int altura(){
             return altura(raiz);
         }
         // Tamanho da árvore
