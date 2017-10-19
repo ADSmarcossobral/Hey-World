@@ -6,6 +6,8 @@
 #define TAM_NOME 75
 #define TAM_EMAIL 50
 #define TAM_END 75
+#define clear system("clear")
+#define pause system("read x") 
 
 using namespace std;
 
@@ -14,12 +16,13 @@ void removeEnter(char *str){
 }
 
 void limpaTela(){
-    system("read x");
-    cout << "Pressione enter para continuar...";
-    system("clear");
+    printf("\nPressione enter para continuar...\n");
+    pause;
+    clear;
 }
 
 int menu(){
+    limpaTela(); 
     printf("================ MENU =================\n");
     printf("1 -> Inserir um aluno\n");
     printf("2 -> Exibir em pre-ordem\n");
@@ -68,18 +71,30 @@ int opcao(arvore::aluno *turma, int op){
         turma->inserirAluno((string) matricula,(string) nome,(string)(string) endereco,(string) email,(string) tel, n1, n2, n3);
     } else if(op == 2){
         cout << "============================= PRE-ORDEM =============================" << endl;
-        turma->pre_ordem();
+        if(!turma->ehVazia())
+            turma->pre_ordem();
+        else
+            cout << "Sem registros na arvore!" << endl;
     } else if(op == 3){
         cout << "============================= POS-ORDEM =============================" << endl;
-        turma->pos_ordem();
+        if(!turma->ehVazia())
+            turma->pos_ordem();
+        else
+            cout << "Nao ha registros na arvore!" << endl;
     } else if(op == 4){
         cout << "============================= EM ORDEM =============================" << endl;
-        turma->em_ordem();
+        if(!turma->ehVazia())
+            turma->em_ordem();
+        else
+            cout << "Nao ha registros na arvore!" << endl;
     }else if(op == 5){
         cout << "============================= ORDENADO =============================" << endl;
         turma->ordena();
     }else if(op == 6){
-        cout << "Media da turma: "<< turma->mediaTurma() << endl;
+        if(!turma->ehVazia())
+            cout << "Media da turma: "<< turma->mediaTurma() << endl;
+        else
+            cout << "Nao ha registros na arvore!" << endl;
     }else if(op == 7){
         string matricula;
         cout << "Informe a matricula: ";
