@@ -44,6 +44,7 @@ namespace arvore{
     };
     class aluno{
     private:
+        bool alteracao;
         // Percorrendo em pré ordem
         void pre_ordem(aluno_node *node){
             if(node == nullptr)
@@ -92,6 +93,72 @@ namespace arvore{
             if(node == nullptr)
                 return -1;
             return max(altura(node->esq), altura(node->dir) + 1);
+        }
+        // Caso 1 de desbalanceamento
+        void caso1(aluno_node *node){
+            aluno_node *aln;
+            aln = node->esq;
+            if(aln->fb == -1)
+                rotacao_dir(node);
+            else
+                rotacao_esq_dir(node);
+            node->fb = 0;
+        }
+        // Caso 2 de desbalanceamento
+        void caso2(aluno_node *node){
+            aluno_node *aln;
+            aln = node->dir;
+            if(aln->fb == 1)
+                rotacao_esq(node);
+            else
+                rotacao_dir_esq(node);
+            node->fb = 0;
+        }
+        // Insere aluno
+        void inserirAluno(aluno_node *node, aluno_node *novo, bool *alteracao){
+            if(node == nullptr){
+                node = novo;
+                *alteracao = true;
+                return;
+            }
+            if(novo->matricula.compare(node->matricula) < 0){
+                inserirAluno(node->esq, novo, alteracao);
+                if(alteracao){
+                    switch(node->fb){
+                        case 1:
+                            node->fb = 0;
+                            *alteracao = false;
+                            break;
+                        case 0:
+                            node->fb = -1;
+                            break;
+                        case -1:
+                            caso1(node);
+                            *alteracao = false;
+                    }
+                    return;
+                }
+            }else if(novo->matricula.compare(node->matricula) > 0)
+                inserirAluno(node->dir, novo, alteracao);
+                if(alteracao){
+                    switch(node->fb){
+                        case 1:
+                            node->fb = 0;
+                            *alteracao = false;
+                            break;
+                        case 0:
+                            node->fb = -1;
+                            break;
+                        case -1:
+                            caso2(node);
+                            *alteracao = false;
+                    }
+                    return;
+                }
+            else{
+                cout << "O aluno já se encontra cadastrado!" << endl;
+                return;
+            }
         }
     public:
         aluno_node *raiz;
@@ -147,16 +214,41 @@ namespace arvore{
             node->dir = tmp;
             node = a;
         }
-        // Balanceia a árvore
-        void balancear(aluno_node *node){
-            int h = altura(node);
-            if(h <= 1 || h >= -1){
-                if(h < 0){
-
-                } else{
-
-                }
+        // Rotaciona para esquerda e depois direita
+        void rotacao_esq_dir(aluno_node *node){
+            aluno_node *alunoEsq, *alunoDir;
+            alunoEsq = node->esq;
+            alunoDir = alunoEsq->dir;
+            alunoEsq->dir = alunoDir->esq;
+            alunoDir->esq = alunoEsq;
+            node->esq = alunoDir;
+            alunoDir->dir = node;
+            if(alunoDir->fb == -1){
+                alunoEsq->fb = 0;
+                node->fb = -1;
+            }else{
+                node->fb = 0;
+                alunoEsq->fb = -1;
             }
+            node = alunoDir;
+        }
+        // Rotaciona para esquerda e depois direita
+        void rotacao_dir_esq(aluno_node *node){
+            aluno_node *alunoEsq, *alunoDir;
+            alunoEsq = node->dir;
+            alunoDir = alunoEsq->esq;
+            alunoEsq->esq = alunoDir->dir;
+            alunoDir->dir = alunoEsq;
+            node->dir = alunoDir->dir;
+            alunoDir->esq = node;
+            if(alunoDir->fb == 1){
+                node->fb = -1;
+                alunoEsq->fb = 0;
+            }else{
+                node->fb = 0;
+                alunoEsq->fb = 1;
+            }
+            node = alunoDir;
         }
         // Copia os dados de um nó para outro
         void copiar(aluno_node *copiando, aluno_node *copiado){
@@ -173,31 +265,8 @@ namespace arvore{
         // Insere um novo aluno na árvore
         void inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
             aluno_node *novo = new aluno_node(matricula, nome, endereco, email, tel, n1, n2, n3);
-            if(raiz == nullptr){
-                raiz = novo;
-                return;
-            }else{
-                aluno_node *atual = raiz;
-                aluno_node *pai = nullptr;
-                while(atual != nullptr){
-                    pai = atual;
-                    if(atual->matricula.compare(matricula) < 0)
-                       atual = atual->dir;
-                    else if(atual->matricula.compare(matricula) > 0)
-                        atual = atual->esq;
-                    else{
-                        cout << "O aluno já se encontra cadastrado!" << endl;
-                        return;
-                    }
-                }
-                if(pai->matricula.compare(matricula) < 0)
-                    pai->dir = novo;
-                else
-                    pai->esq = novo;
-            }
-            if(!isAVL(raiz)){
-                balancear(raiz);
-            }
+            bool alteracao;
+            inserirAluno(raiz, novo, &alteracao);
         }
         // Busca um aluno na lista a partir da matrícula
         aluno_node *buscar(string matricula){
@@ -207,7 +276,7 @@ namespace arvore{
                 comp = atual->matricula.compare(matricula);
                 if(comp == 0)
                     return atual;
-                else if(comp == -1)
+                else if(comp < 0)
                     atual = atual->dir;
                 else
                     atual = atual->esq;
