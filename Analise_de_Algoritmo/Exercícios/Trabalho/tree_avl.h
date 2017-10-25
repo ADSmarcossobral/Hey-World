@@ -88,83 +88,191 @@ namespace arvore{
                 return 0;
             return tamanho(node->esq) + tamanho(node->dir) + 1;
         }
+        // Retorna true se a matrícula de um nó for igual à do outro
+        bool equalsNode(aluno_node *node, aluno_node *outro_node){
+            return node->matricula.compare(outro_node->matricula) == 0;
+        }
         // Altura da árvore
         int altura(aluno_node *node){
             if(node == nullptr)
-                return -1;
-            return max(altura(node->esq), altura(node->dir) + 1);
+                return 0;
+            return max(altura(node->esq), altura(node->dir)) + 1;
         }
-        // Caso 1 de desbalanceamento
-        void caso1(aluno_node *node){
-            aluno_node *aln;
-            aln = node->esq;
-            if(aln->fb == -1)
-                rotacao_dir(node);
+        // Rotaciona para direita
+        void rotacao_dir(aluno_node *node){
+            aluno_node *nova_raiz = node->esq;
+            aluno_node *sub = nova_raiz->dir;
+            node->esq = sub;
+            nova_raiz->dir = node;
+            if(paiNode(node) == nullptr)
+                raiz = nova_raiz;
+            else if(equalsNode(node, paiNode(node)->esq))
+                paiNode(node)->esq = nova_raiz;
             else
-                rotacao_esq_dir(node);
-            node->fb = 0;
+                paiNode(node)->dir = nova_raiz;
         }
-        // Caso 2 de desbalanceamento
-        void caso2(aluno_node *node){
-            aluno_node *aln;
-            aln = node->dir;
-            if(aln->fb == 1)
-                rotacao_esq(node);
+        // Rotaciona para esquerda
+        void rotacao_esq(aluno_node *node){
+            aluno_node *nova_raiz = node->dir;
+            aluno_node *sub = nova_raiz->esq;
+            node->dir = sub;
+            nova_raiz->esq = node;
+            if(paiNode(node) == nullptr)
+                raiz = nova_raiz;
+            else if(equalsNode(node, paiNode(node)->esq))
+                paiNode(node)->esq = nova_raiz;
             else
-                rotacao_dir_esq(node);
-            node->fb = 0;
+                paiNode(node)->dir = nova_raiz;
+        }
+        // Copia os dados de um nó para outro
+        void copiar(aluno_node *copiando, aluno_node *copiado){
+            copiando->matricula = copiado->matricula;
+            copiando->nome = copiado->nome;
+            copiando->tel = copiado->tel;
+            copiando->endereco = copiado->endereco;
+            copiando->email = copiado->email;
+            copiando->n1 = copiado->n1;
+            copiando->n2 = copiado->n2;
+            copiando->n3 = copiado->n3;
+            copiando->media = copiado->media;
+        }
+        // Retorna o pai do nó
+        aluno_node* paiNode(aluno_node *node){
+            if(equalsNode(node, raiz))
+                return nullptr;
+            aluno_node *pai = nullptr;
+            aluno_node *atual = raiz;
+            while(!equalsNode(atual, node)){
+                pai = atual;
+                if(node->matricula.compare(atual->matricula) > 0)
+                    atual = atual->dir;
+                else
+                    atual = atual->esq;
+            }
+            return pai;
+        }
+        // Recalcula os fatores e balanceia os ancestrais do nó
+        void balancear(aluno_node *atual){
+            while(atual != nullptr){
+                int hd = altura(atual->dir);
+                int he = altura(atual->esq);
+                atual->fb = hd - he;
+                cout << "No: " << atual->matricula << endl;
+                cout << "HD: " << hd << endl;
+                cout << "HE: " << he << endl;
+                cout << "FB: " << atual->fb << endl;
+                if(atual->fb == -2){
+                    if(atual->esq->fb == 1){
+                        rotacao_esq(atual->esq);
+                    }
+                    rotacao_dir(atual);
+                }else if(atual->fb == 2){
+                    if(atual->dir->fb == -1){
+                        rotacao_dir(atual->dir);
+                    }
+                    rotacao_esq(atual);
+                }
+                atual = paiNode(atual);
+            }
         }
         // Insere aluno
-        void inserirAluno(aluno_node *node, aluno_node *novo, bool *alteracao){
-            if(node == nullptr){
-                node = novo;
-                *alteracao = true;
-                return;
+        bool inserir(aluno_node *node, aluno_node *novo){
+            aluno_node *atual = raiz;
+            aluno_node *pai = nullptr;
+            
+            while(atual != nullptr){
+                pai = atual;
+                if(novo->matricula.compare(atual->matricula) > 0)
+                    atual = atual->dir;
+                else if(novo->matricula.compare(atual->matricula) < 0)
+                    atual = atual->esq;
+                else
+                    return false;
             }
-            if(novo->matricula.compare(node->matricula) < 0){
-                inserirAluno(node->esq, novo, alteracao);
-                if(alteracao){
-                    switch(node->fb){
-                        case 1:
-                            node->fb = 0;
-                            *alteracao = false;
-                            break;
-                        case 0:
-                            node->fb = -1;
-                            break;
-                        case -1:
-                            caso1(node);
-                            *alteracao = false;
+            atual = novo;
+            if(pai == nullptr)
+                raiz = atual;
+            else if(atual->matricula.compare(pai->matricula) > 0)
+                pai->dir = atual;
+            else if(atual->matricula.compare(pai->matricula) < 0)
+                pai->esq = atual;
+
+            balancear(atual);
+            return true;
+        }
+        // Remove um aluno a partir da matrícula
+        bool remover(string matricula) {
+            aluno_node *atual = raiz;
+            aluno_node *paiAtual = nullptr;
+            while(atual != nullptr){
+                if(atual->matricula.compare(matricula) > 0){
+                    paiAtual = atual;
+                    atual = atual->esq; 
+                }else if(atual->matricula.compare(matricula) < 0){
+                    paiAtual = atual;
+                    atual = atual->dir;
+                }else{
+                    if(atual->esq == nullptr && atual->dir == nullptr){
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = nullptr;
+                            else
+                                paiAtual->esq = nullptr;
+                            balancear(paiAtual);
+                            delete(atual);
+                        }else{
+                            balancear(paiAtual);
+                            delete(atual);
+                            raiz = nullptr;
+                        }
+                    }else if(atual->esq == nullptr){
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = atual->dir;
+                            else
+                                paiAtual->esq = atual->dir;
+                        }else{
+                            raiz = atual->dir;
+                        }
+                        balancear(paiAtual);
+                        delete(atual);
+                    } else if(atual->dir == nullptr){
+                        if(paiAtual != nullptr){
+                            if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                paiAtual->dir = atual->esq;
+                            else
+                                paiAtual->esq = atual->esq;
+                        }else{
+                            raiz = atual->esq;
+                        }
+                        balancear(paiAtual);
+                        delete(atual);
+                    } else{
+                        aluno_node *filho = atual->esq;
+                        aluno_node *paiFilho = atual;
+                        while(filho->dir != nullptr){
+                            paiFilho = filho;
+                            filho = filho->dir;
+                        }     
+                        copiar(atual, filho);
+                        atual->esq = nullptr;
+                        if(equalsNode(raiz, filho))
+                            raiz = atual;
+                        else
+                            paiAtual->dir = atual;
+                        balancear(atual);
+                        delete(filho);
                     }
-                    return;
+                    return true;
                 }
-            }else if(novo->matricula.compare(node->matricula) > 0)
-                inserirAluno(node->dir, novo, alteracao);
-                if(alteracao){
-                    switch(node->fb){
-                        case 1:
-                            node->fb = 0;
-                            *alteracao = false;
-                            break;
-                        case 0:
-                            node->fb = -1;
-                            break;
-                        case -1:
-                            caso2(node);
-                            *alteracao = false;
-                    }
-                    return;
-                }
-            else{
-                cout << "O aluno já se encontra cadastrado!" << endl;
-                return;
             }
+            return false;
         }
     public:
         aluno_node *raiz;
         // Construtor da classe
         aluno(){
-            raiz = nullptr;
+            raiz = NULL;
         }
         // Percorrendo em pré ordem
         void pre_ordem(){
@@ -196,77 +304,10 @@ namespace arvore{
             int hd = altura(node->dir), he = altura(node->esq);
             return ((hd - he) < 2) && ((hd - he) > -2);
         }
-        // Rotaciona para direita
-        void rotacao_dir(aluno_node *node){
-            aluno_node *a, *tmp;
-            a = node->esq;
-            tmp = a->dir;
-            a->dir = node;
-            node->esq = tmp;
-            node = a;
-        }
-        // Rotaciona para esquerda
-        void rotacao_esq(aluno_node *node){
-            aluno_node *a, *tmp;
-            a = node->dir;
-            tmp = a->esq;
-            a->esq = node;
-            node->dir = tmp;
-            node = a;
-        }
-        // Rotaciona para esquerda e depois direita
-        void rotacao_esq_dir(aluno_node *node){
-            aluno_node *alunoEsq, *alunoDir;
-            alunoEsq = node->esq;
-            alunoDir = alunoEsq->dir;
-            alunoEsq->dir = alunoDir->esq;
-            alunoDir->esq = alunoEsq;
-            node->esq = alunoDir;
-            alunoDir->dir = node;
-            if(alunoDir->fb == -1){
-                alunoEsq->fb = 0;
-                node->fb = -1;
-            }else{
-                node->fb = 0;
-                alunoEsq->fb = -1;
-            }
-            node = alunoDir;
-        }
-        // Rotaciona para esquerda e depois direita
-        void rotacao_dir_esq(aluno_node *node){
-            aluno_node *alunoEsq, *alunoDir;
-            alunoEsq = node->dir;
-            alunoDir = alunoEsq->esq;
-            alunoEsq->esq = alunoDir->dir;
-            alunoDir->dir = alunoEsq;
-            node->dir = alunoDir->dir;
-            alunoDir->esq = node;
-            if(alunoDir->fb == 1){
-                node->fb = -1;
-                alunoEsq->fb = 0;
-            }else{
-                node->fb = 0;
-                alunoEsq->fb = 1;
-            }
-            node = alunoDir;
-        }
-        // Copia os dados de um nó para outro
-        void copiar(aluno_node *copiando, aluno_node *copiado){
-            copiando->matricula = copiado->matricula;
-            copiando->nome = copiado->nome;
-            copiando->tel = copiado->tel;
-            copiando->endereco = copiado->endereco;
-            copiando->email = copiado->email;
-            copiando->n1 = copiado->n1;
-            copiando->n2 = copiado->n2;
-            copiando->n3 = copiado->n3;
-            copiando->media = copiado->media;
-        }
         // Insere um novo aluno na árvore
         void inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
             aluno_node *novo = new aluno_node(matricula, nome, endereco, email, tel, n1, n2, n3);
-            bool alteracao;
-            inserirAluno(raiz, novo, &alteracao);
+            inserir(raiz, novo);
         }
         // Busca um aluno na lista a partir da matrícula
         aluno_node *buscar(string matricula){
@@ -285,69 +326,7 @@ namespace arvore{
         }
         // Remove um aluno a partir da matrícula
         bool removerAluno(string matricula) {
-            aluno_node *atual = raiz;
-            aluno_node *paiAtual = nullptr;
-            while(atual != nullptr){
-                if(atual->matricula.compare(matricula) > 0){
-                    paiAtual = atual;
-                    atual = atual->esq; 
-                }else if(atual->matricula.compare(matricula) < 0){
-                    paiAtual = atual;
-                    atual = atual->dir;
-                }else{
-                    if(atual->esq == nullptr && atual->dir == nullptr){
-                        if(paiAtual != nullptr){
-                            if(paiAtual->dir->matricula.compare(matricula) == 0)
-                                paiAtual->dir = nullptr;
-                            else
-                                paiAtual->esq = nullptr;
-                            delete(atual);
-                        }else{
-                            delete(atual);
-                            raiz = nullptr;
-                        }
-                    }else if(atual->esq == nullptr){
-                        if(paiAtual != nullptr){
-                            if(paiAtual->dir->matricula.compare(matricula) == 0)
-                                paiAtual->dir = atual->dir;
-                            else
-                                paiAtual->esq = atual->dir;
-                        }else{
-                            raiz = atual->dir;
-                        }
-                        delete(atual);
-                    } else if(atual->dir == nullptr){
-                        if(paiAtual != nullptr){
-                            if(paiAtual->dir->matricula.compare(matricula) == 0)
-                                paiAtual->dir = atual->esq;
-                            else
-                                paiAtual->esq = atual->esq;
-                        }else{
-                            raiz = atual->esq;
-                        }
-                        delete(atual);
-                    } else{
-                        aluno_node *filho = atual->esq;
-                        aluno_node *paiFilho = atual;
-                        while(filho->dir != nullptr){
-                            paiFilho = filho;
-                            filho = filho->dir;
-                        }     
-                        copiar(atual, filho);
-                        atual->esq = nullptr;
-                        if(raiz->matricula.compare(filho->matricula) == 0)
-                            raiz = atual;
-                        else
-                            paiAtual->dir = atual;
-                        delete(filho);
-                    }
-                    /*if(!isAVL(raiz)){
-                        balancear(raiz);
-                    }*/
-                    return true;
-                }
-            }
-            return false;
+            remover(matricula);
         }
         // Retorna verdadeiro se a árvore estiver vazia
         bool ehVazia() {
