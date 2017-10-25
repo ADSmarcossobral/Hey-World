@@ -157,10 +157,6 @@ namespace arvore{
                 int hd = altura(atual->dir);
                 int he = altura(atual->esq);
                 atual->fb = hd - he;
-                cout << "No: " << atual->matricula << endl;
-                cout << "HD: " << hd << endl;
-                cout << "HE: " << he << endl;
-                cout << "FB: " << atual->fb << endl;
                 if(atual->fb == -2){
                     if(atual->esq->fb == 1){
                         rotacao_esq(atual->esq);
@@ -214,23 +210,26 @@ namespace arvore{
                 }else{
                     if(atual->esq == nullptr && atual->dir == nullptr){
                         if(paiAtual != nullptr){
-                            if(paiAtual->dir->matricula.compare(matricula) == 0)
-                                paiAtual->dir = nullptr;
-                            else
+                            if(paiAtual->dir != nullptr){
+                                if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                    paiAtual->dir = nullptr;
+                            }else{
                                 paiAtual->esq = nullptr;
+                            }
                             balancear(paiAtual);
                             delete(atual);
                         }else{
-                            balancear(paiAtual);
                             delete(atual);
                             raiz = nullptr;
                         }
                     }else if(atual->esq == nullptr){
                         if(paiAtual != nullptr){
-                            if(paiAtual->dir->matricula.compare(matricula) == 0)
-                                paiAtual->dir = atual->dir;
-                            else
+                            if(paiAtual->dir != nullptr){
+                                if(paiAtual->dir->matricula.compare(matricula) == 0)
+                                    paiAtual->dir = atual->dir;
+                            }else{
                                 paiAtual->esq = atual->dir;
+                            }
                         }else{
                             raiz = atual->dir;
                         }
