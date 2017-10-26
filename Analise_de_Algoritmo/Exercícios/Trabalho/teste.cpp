@@ -16,6 +16,10 @@ int main(){
     "caio@gmail.com", "(71) 3311-4124", 8.0, 9, 9);
     teste.inserirAluno("2016116012", "Renato Soz", "Travessa Ligel",
     "dan@gmail.com", "(71) 3412-4124", 6.0, 9.5, 6.5);
+    teste.inserirAluno("2016116011", "Roberto Son", "Travessa Ligel",
+    "dan@gmail.com", "(71) 3412-4124", 6.0, 9.5, 6.5);
+    teste.inserirAluno("2016116030", "Boca Prince", "Travessa Ligel",
+    "dan@gmail.com", "(71) 3412-4124", 6.0, 9.5, 6.5);
     // Pré-ordem
     teste.pre_ordem();
     // Consulta
