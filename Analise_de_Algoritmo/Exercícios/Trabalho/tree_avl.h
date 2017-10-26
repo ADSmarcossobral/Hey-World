@@ -252,7 +252,7 @@ namespace arvore{
                         while(filho->dir != nullptr){
                             paiFilho = filho;
                             filho = filho->dir;
-                        }     
+                        }
                         copiar(atual, filho);
                         atual->esq = nullptr;
                         if(equalsNode(raiz, filho))
