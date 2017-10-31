@@ -1,4 +1,4 @@
-#include "./tree_avl.h"
+#include "./arvore_avl.h"
 #include <bits/stdc++.h>
 
 int main(){
