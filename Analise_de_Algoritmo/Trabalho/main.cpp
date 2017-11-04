@@ -68,22 +68,27 @@ int opcao(arvore::aluno *turma, int op){
         cin >> n2;
         cout << "Nota 3: ";
         cin >> n3;
-        turma->inserirAluno((string) matricula,(string) nome,(string)(string) endereco,(string) email,(string) tel, n1, n2, n3);
+        bool inserido = false;
+        inserido = turma->inserirAluno((string) matricula,(string) nome,(string)(string) endereco,(string) email,(string) tel, n1, n2, n3);
+        if(!inserido)
+            cout << "O aluno ja se encontra na base de dados." << endl;
+        else
+            cout << "Aluno inserido com sucesso!" << endl;
     } else if(op == 2){
         cout << "============================= PRE-ORDEM =============================" << endl;
-        if(!turma->ehVazia())
+        if(!turma->isVazia())
             turma->pre_ordem();
         else
             cout << "Sem registros na arvore!" << endl;
     } else if(op == 3){
         cout << "============================= POS-ORDEM =============================" << endl;
-        if(!turma->ehVazia())
+        if(!turma->isVazia())
             turma->pos_ordem();
         else
             cout << "Nao ha registros na arvore!" << endl;
     } else if(op == 4){
         cout << "============================= EM ORDEM =============================" << endl;
-        if(!turma->ehVazia())
+        if(!turma->isVazia())
             turma->em_ordem();
         else
             cout << "Nao ha registros na arvore!" << endl;
@@ -91,9 +96,11 @@ int opcao(arvore::aluno *turma, int op){
         cout << "============================= ORDENADO =============================" << endl;
         turma->ordena();
     }else if(op == 6){
-        if(!turma->ehVazia())
-            cout << "Media da turma: "<< turma->mediaTurma() << endl;
-        else
+        if(!turma->isVazia()){
+            cout << "_______________________________________________" << endl;
+            cout << "Media da turma: " << turma->mediaTurma() << endl;
+            cout << "_______________________________________________" << endl;
+        }else
             cout << "Nao ha registros na arvore!" << endl;
     }else if(op == 7){
         string matricula;
@@ -114,8 +121,12 @@ int opcao(arvore::aluno *turma, int op){
         else
             cout << "Aluno nao encontrado na arvore!" << endl;
     }else if(op == 9){
-        turma->limpar();
-        cout << "Todos os registros foram apagados." << endl;
+        if(!turma->isVazia()){
+            turma->limpar();
+            cout << "Todos os registros foram apagados." << endl;
+        }else{
+            cout << "Nao ha registros na arvore!" << endl;
+        }
     }else if(op == 10){
         printf("\nPrograma finalizado!!!\n");
         return 1;

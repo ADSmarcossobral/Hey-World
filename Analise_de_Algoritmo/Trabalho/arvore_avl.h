@@ -303,9 +303,9 @@ namespace arvore{
             return ((hd - he) < 2) && ((hd - he) > -2);
         }
         // Insere um novo aluno na árvore
-        void inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
+        bool inserirAluno(string matricula, string nome, string endereco, string email, string tel, double n1, double n2, double n3){
             aluno_node *novo = new aluno_node(matricula, nome, endereco, email, tel, n1, n2, n3);
-            inserir(raiz, novo);
+            return inserir(raiz, novo);
         }
         // Busca um aluno na lista a partir da matrícula
         aluno_node *buscar(string matricula){
@@ -324,10 +324,10 @@ namespace arvore{
         }
         // Remove um aluno a partir da matrícula
         bool removerAluno(string matricula) {
-            remover(matricula);
+            return remover(matricula);
         }
         // Retorna verdadeiro se a árvore estiver vazia
-        bool ehVazia() {
+        bool isVazia() {
             if (raiz == nullptr) {
                     return true;
             } else {
@@ -335,12 +335,12 @@ namespace arvore{
             }
         }
         // Preenche um vetor com todos os nós da árvore, percorrendo em pós-ordem
-        void toVetor(aluno_node *vetor, int *indice, aluno_node *raiz){
-            if(raiz == nullptr)
+        void toVetor(aluno_node *vetor, int *indice, aluno_node *node){
+            if(node == nullptr)
                 return;
-            toVetor(vetor, indice, raiz->esq);
-            toVetor(vetor, indice, raiz->dir);
-            vetor[*indice] = *raiz;
+            toVetor(vetor, indice, node->esq);
+            toVetor(vetor, indice, node->dir);
+            vetor[*indice] = *node;
             *indice = *indice + 1;
         }
         // Retorna a média da média de todos os alunos da árvore
