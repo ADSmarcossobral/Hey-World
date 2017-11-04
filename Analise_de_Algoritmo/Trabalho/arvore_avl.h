@@ -44,7 +44,6 @@ namespace arvore{
     };
     class aluno{
     private:
-        bool alteracao;
         // Percorrendo em pré ordem
         void pre_ordem(aluno_node *node){
             if(node == nullptr)
@@ -95,7 +94,7 @@ namespace arvore{
         // Altura da árvore
         int altura(aluno_node *node){
             if(node == nullptr)
-                return 0;
+                return -1;
             return max(altura(node->esq), altura(node->dir)) + 1;
         }
         // Rotaciona para direita
